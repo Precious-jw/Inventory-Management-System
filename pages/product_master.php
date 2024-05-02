@@ -1,5 +1,9 @@
 <?php
 include("config/db_conn.php");
+
+if ($_SESSION['role'] == 0){
+    redirect("http://localhost/bootstrap/");
+}
 ?>
 <!-- Begin Page Content -->
 <div class="container-fluid">
@@ -34,7 +38,9 @@ include("config/db_conn.php");
                             <th>Product Name</th>
                             <th>Purchase Price</th>
                             <th>Sale Price</th>
-                            <th>Quantity</th>
+                            <th>Available Quantity</th>
+                            <th>Total Purchase Amount</th>
+                            <th>Total Sale Amount</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -56,6 +62,8 @@ include("config/db_conn.php");
                                     <td>&#8358;<?= number_format($row['purchase_price']); ?></td>
                                     <td>&#8358;<?= number_format($row['sale_price']); ?></td>
                                     <td><?= $row['product_qty']; ?></td>
+                                    <td>&#8358;<?= number_format($row['product_qty']*$row['purchase_price']); ?></td>
+                                    <td>&#8358;<?= number_format($row['product_qty']*$row['sale_price']); ?></td>
                                     <td>
                                         <button class="btn btn-primary btn-sm" onclick="updateProduct(<?= $row['product_id']; ?>)">Update</button>
                                         <button class="btn btn-danger btn-sm" onclick="deleteProduct(<?= $row['product_id']; ?>)">Delete</button>

@@ -58,42 +58,53 @@ $(document).ready(function(){
     //Update Product
     $("#UpdateSaleForm").submit(function(event){
         event.preventDefault();
-        
-        //Send the date to the PHP Script using AJAX
-        $.ajax({
-            type: "POST",
-            url: "php/sales/update.php",
-            data: $(this).serialize() + "$action=updateSales",
-            success: function (response){
-                var jsonResponse = JSON.parse(response);
+        var updateQuantity = $("#edit_quantity").val();
+        var updatePayment = $("#update_select_payment").val();
 
-                //Display the message
-                successMessage(
-                    jsonResponse.status_code === "error" ? "error" : "success",
-                    jsonResponse.status
-                );
-
-                if(jsonResponse.status_code === "success"){
-                    $("#update_sales_modal").modal("hide"); //Hide the modal
-                    $("#loader-container").show(); //Show the loader
-
-                    //Reload the current page
-                    setTimeout(function(){
-                        location.reload();
-                    }, 1500);
-                } else if(jsonResponse.status_code === "error") {
+        if(updatePayment === ""){
+            errorMessage("Select a payment method");
+            $("#loader-container").hide(); //Hide the loader if there's an error
+        } else if (updateQuantity == 0) {
+            errorMessage("Enter a quantity");
+            $("#loader-container").hide(); //Hide the loader if there's an error
+        } else {
+            //Send the data to the PHP Script using AJAX
+            $.ajax({
+                type: "POST",
+                url: "php/sales/update.php",
+                data: $(this).serialize() + "$action=updateSales",
+                success: function (response){
+                    var jsonResponse = JSON.parse(response);
+    
+                    //Display the message
+                    successMessage(
+                        jsonResponse.status_code === "error" ? "error" : "success",
+                        jsonResponse.status
+                    );
+    
+                    if(jsonResponse.status_code === "success"){
+                        $("#update_sales_modal").modal("hide"); //Hide the modal
+                        $("#loader-container").show(); //Show the loader
+    
+                        //Reload the current page
+                        setTimeout(function(){
+                            location.reload();
+                        }, 1500);
+                    } else if(jsonResponse.status_code === "error") {
+                        $("#loader-container").hide(); //Hide the loader if there's an error
+                    }
+                }, 
+                error: function(xhr, status, error){
+                    var errorMessage = "An error occurred while updating the sale.";
+                    if(xhr.responseText){
+                        errorMessage = JSON.parse(xhr.responseText).status;
+                    }
+                    errorMessage(errorMessage);
                     $("#loader-container").hide(); //Hide the loader if there's an error
                 }
-            }, 
-            error: function(xhr, status, error){
-                var errorMessage = "An error occurred while updating the sale.";
-                if(xhr.responseText){
-                    errorMessage = JSON.parse(xhr.responseText).status;
-                }
-                errorMessage(errorMessage);
-                $("#loader-container").hide(); //Hide the loader if there's an error
-            }
-        })
+            })
+        }
+        
     });
 
     //Delete Sales

@@ -10,14 +10,23 @@
     <div class="row">
 
         <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
+        <div class="col-xl-4 col-md-6 mb-4">
             <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Sales</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">&#8358;40,000</div>
+                            <div class="text-s font-weight-bold text-primary text-uppercase mb-1">
+                                Total Amount of Products Sold</div>
+                                <?php
+                                $sql = "SELECT SUM(total_price) AS total_amount from sales";
+                                $stmt = $conn->prepare($sql);
+                                $stmt->execute();
+                                $result = $stmt->get_result()->fetch_object()->total_amount;
+                                ?>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">&#8358;<?= number_format($result); ?></div>
+                            <?php
+                                $stmt->close();
+                            ?>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -28,14 +37,31 @@
         </div>
 
         <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
+        <div class="col-xl-4 col-md-6 mb-4">
             <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                Purchases</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">&#8358;215,000</div>
+                            <div class="text-s font-weight-bold text-success text-uppercase mb-1">
+                            Total Inventory Amount</div>
+                                <?php
+                                $final_total = 0;
+                                $sql = "SELECT * from product";
+                                $stmt = $conn->prepare($sql);
+                                $stmt->execute();
+                                $result = $stmt->get_result();
+
+                                if ($result->num_rows > 0) {
+                                    foreach ($result as $row) {
+                                        $total = $row['purchase_price']*$row['product_qty'];
+                                        $final_total += $total;
+                                    }
+                                }
+                                ?>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">&#8358;<?= number_format($final_total); ?></div>
+                                <?php
+                                    $stmt->close();
+                                ?>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -46,14 +72,20 @@
         </div>
 
         <!-- Pending Requests Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
+        <div class="col-xl-4 col-md-6 mb-4">
             <div class="card border-left-warning shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                Items in Inventory</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">228</div>
+                            <div class="text-s font-weight-bold text-warning text-uppercase mb-1">
+                                Number of Products in Inventory</div>
+                                <?php
+                                    $sql = "SELECT * from product";
+                                    $stmt = $conn->prepare($sql);
+                                    $stmt->execute();
+                                    $result = $stmt->get_result();
+                                ?>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $result->num_rows;?></div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -63,13 +95,13 @@
             </div>
         </div>
 
-        <!-- Pending Requests Card Example -->
+        <!-- Pending Requests Card Example
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-warning shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                            <div class="text-s font-weight-bold text-warning text-uppercase mb-1">
                                 Inventory amount</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
                         </div>
@@ -79,7 +111,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>  -->
     </div>
 
     <!-- Content Row -->

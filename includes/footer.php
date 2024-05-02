@@ -5,7 +5,7 @@
 <footer class="sticky-footer bg-white">
     <div class="container my-auto">
         <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Inventory Management System 2021</span>
+            <span>Copyright &copy; Inventory Management System 2024</span>
         </div>
     </div>
 </footer>
@@ -32,6 +32,9 @@
 <!-- Ajax-->
 <script src="js/product-ajax.js"></script>
 <script src="js/sales-ajax.js"></script>
+<script src="js/users-ajax.js"></script>
+<script src="js/signup-ajax.js"></script>
+<script src="js/signin-ajax.js"></script>
 
 <!-- Page level plugins -->
 <script src="vendor/chart.js/Chart.min.js"></script>

@@ -102,7 +102,7 @@
             </div>
             <form id="UpdateSaleForm">
             <div class="modal-body">
-                        <input type="hidden" name="update_sales_id" id="edit_sales_id">
+                        <input type="hidden" name="update_sale_id" id="edit_sale_id">
                     <div class="container table-responsive">
                         <table class="table table-bordered text-gray-900 mt-2">
                             <thead>
