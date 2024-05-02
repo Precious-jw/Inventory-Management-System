@@ -13,7 +13,7 @@ $(document).ready(function(){
             errorMessage("All fields are required");
             $("#loader-container").hide(); //Hide the loader if there's an error
         } else {
-            //Send the date to the PHP Script using AJAX
+            //Send the data to the PHP Script using AJAX
             $.ajax({
                 type: "POST",
                 url: "php/product/add.php",

@@ -105,17 +105,20 @@ include('includes/sales_modal.php');
     }
 
     // Get product to update
-    function deleteProduct(product_id) {
-        $("#delete_product_id").val(product_id);
+    function deleteSales(sales_id) {
+        $("#delete_sale_id").val(sales_id);
 
-        $.post("php/product/delete.php", {
-            product_id: product_id
+        $.post("php/sales/delete.php", {
+            sales_id: sales_id
         }, function(data, status) {
             var id = JSON.parse(data);
-            $('#edit_product').val(id.product_name);
-            $('#edit_purchase_price').val(id.purchase_price);
-            $('#edit_sale_price').val(id.sale_price);
+            $('#edit_product_name').val(id.products); 
+            $('#edit_total').val(id.total_price);
+            $('#edit_quantity').val(id.quantity);
+            $('#edit_customer_name').val(id.customer_name); 
+            $('#edit_customer_phone').val(id.customer_phone); 
+            $('#update_select_payment').val(id.payment_method);
         })
-        $("#delete__sales_modal").modal("show"); //Show the modal
+        $("#delete_sales_modal").modal("show"); //Show the modal
     }
 </script>

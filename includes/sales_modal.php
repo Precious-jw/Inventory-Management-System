@@ -138,8 +138,8 @@
                                             ?>
                                         </select>
                                     </td>
-                                    <td><input type="text" class="form-control text-gray-900" name="update_product" id="edit_product_name" value=""></td>
-                                    <td><input type="number" class="form-control text-gray-900" name="update_price" id="edit_price" value="&#8358;00.00"></td>
+                                    <td><input type="text" readonly class="form-control text-gray-900" name="update_product" id="edit_product_name" value=""></td>
+                                    <td><input type="number" readonly class="form-control text-gray-900" name="update_price" id="edit_price" value="&#8358;00.00"></td>
                                     <td><input type="number" class="form-control text-gray-900" name="update_quantity" id="edit_quantity" placeholder="Enter Quantity"></td>
                                     <td><select id="update_select_payment" name="update_payment" class="form-control">
                                             <option value="">Select Method</option>
@@ -165,7 +165,7 @@
                             <tbody>
                                 <td><input type="text" class="form-control text-gray-900" name="update_customer_name" id="edit_customer_name" placeholder="Enter Customer Name"></td>
                                 <td><input type="number" class="form-control text-gray-900" name="update_customer_phone" id="edit_customer_phone" placeholder="Enter Customer Phone No."></td>
-                                <td><input type="number" class="form-control text-gray-900" name="update_total" id="edit_total" placeholder="&#8358;00.00"></td>
+                                <td><input type="number" readonly class="form-control text-gray-900" name="update_total" id="edit_total" placeholder="&#8358;00.00"></td>
                             </tbody>
                         </table>
                     </div>
@@ -187,10 +187,10 @@
                 <h3 class="modal-title text-red">Warning</h3>
                 <button type="button" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-close"></i></button>
             </div>
-            <form id="deleteProductForm">
+            <form id="deleteSaleForm">
                 <div class="modal-body">
-                    <input type="hidden" name="delete_product_id" id="delete_product_id">
-                    <p><strong>Are you sure you want to delete this product?</strong></p>
+                    <input type="hidden" name="delete_sale_id" id="delete_sale_id">
+                    <p><strong>Are you sure you want to delete this Sales Record?</strong></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

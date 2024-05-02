@@ -15,11 +15,11 @@ if (isset($_POST['update_sales_id'])) {
     $stmt = $conn->prepare("UPDATE sales SET products=?, quantity=?, payment_method=?, customer_name=?, customer_phone=?, total_price=? WHERE id = ?");
     $stmt->bind_param("sissiii", $products, $quantity, $payment, $customer_name, $customer_phone, $prices, $sale_id);
 
-    if ($stmt->execute()) {
-        $response['status'] = 'Sale record updated successfully';
+    if ($stmt_update->execute()) {
+        $response['status'] = 'Product updated successfully.';
         $response['status_code'] = 'success';
     } else {
-        $response['status'] = 'Failed to update Sale record';
+        $response['status'] = 'Failed to update Product';
         $response['status_code'] = 'error';
     }
 

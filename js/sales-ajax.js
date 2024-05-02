@@ -63,7 +63,7 @@ $(document).ready(function(){
         $.ajax({
             type: "POST",
             url: "php/sales/update.php",
-            data: $(this).serialize() + "$action=updateSale",
+            data: $(this).serialize() + "$action=updateSales",
             success: function (response){
                 var jsonResponse = JSON.parse(response);
 
@@ -74,7 +74,7 @@ $(document).ready(function(){
                 );
 
                 if(jsonResponse.status_code === "success"){
-                    $("#update_sale_modal").modal("hide"); //Hide the modal
+                    $("#update_sales_modal").modal("hide"); //Hide the modal
                     $("#loader-container").show(); //Show the loader
 
                     //Reload the current page
@@ -103,8 +103,8 @@ $(document).ready(function(){
         //Send the data to the PHP Script using AJAX
         $.ajax({
             type: "POST",
-            url: "php/product/delete.php",
-            data: $(this).serialize() + "$action=deleteProduct",
+            url: "php/sales/delete.php",
+            data: $(this).serialize() + "$action=deleteSale",
             success: function (response){
                 var jsonResponse = JSON.parse(response);
 
@@ -115,7 +115,7 @@ $(document).ready(function(){
                 );
 
                 if(jsonResponse.status_code === "success"){
-                    $("#delete_product_modal").modal("hide"); //Hide the modal
+                    $("#delete_sales_modal").modal("hide"); //Hide the modal
                     $("#loader-container").show(); //Show the loader
 
                     //Reload the current page
@@ -127,7 +127,7 @@ $(document).ready(function(){
                 }
             }, 
             error: function(xhr, status, error){
-                var errorMessage = "An error occurred while deleting the product.";
+                var errorMessage = "An error occurred while deleting the sale.";
                 if(xhr.responseText){
                     errorMessage = JSON.parse(xhr.responseText).status;
                 }
