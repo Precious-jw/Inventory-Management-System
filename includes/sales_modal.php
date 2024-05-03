@@ -93,7 +93,7 @@
 </div>
 
 
-<!-- Update Product Modal -->
+<!-- Update Sales Modal -->
 <div class="modal fade" id="update_sales_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">

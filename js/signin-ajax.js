@@ -25,7 +25,7 @@ $(document).ready(function () {
                     );
 
                     if (jsonResponse.status_code === "success") {
-                        $("#loginForm")[0].reset(); //Reset the form after submission
+                        //$("#loginForm")[0].reset(); //Reset the form after submission
                         $("#loader-container").show(); //Show the loader
 
                         //Reload the current page

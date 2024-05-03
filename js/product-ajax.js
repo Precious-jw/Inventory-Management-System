@@ -56,41 +56,53 @@ $(document).ready(function(){
     $("#UpdateProductForm").submit(function(event){
         event.preventDefault();
         
-        //Send the date to the PHP Script using AJAX
-        $.ajax({
-            type: "POST",
-            url: "php/product/update.php",
-            data: $(this).serialize() + "$action=updateProduct",
-            success: function (response){
-                var jsonResponse = JSON.parse(response);
+        //Get the Data from the input
+        var product_name = $("#edit_product").val();
+        var purchase_price = $("#edit_purchase_price").val();
+        var sale_price = $("#edit_sale_price").val();
+        var edit_qty = $("#edit_qty").val();
 
-                //Display the message
-                successMessage(
-                    jsonResponse.status_code === "error" ? "error" : "success",
-                    jsonResponse.status
-                );
+        //Check if the input fields are empty
+        if(product_name === "" || purchase_price === "" || sale_price === "" || edit_qty == ""){
+            errorMessage("All fields are required");
+            $("#loader-container").hide(); //Hide the loader if there's an error
+        } else {
+            //Send the date to the PHP Script using AJAX
+            $.ajax({
+                type: "POST",
+                url: "php/product/update.php",
+                data: $(this).serialize() + "$action=updateProduct",
+                success: function (response){
+                    var jsonResponse = JSON.parse(response);
 
-                if(jsonResponse.status_code === "success"){
-                    $("#update_product_modal").modal("hide"); //Hide the modal
-                    $("#loader-container").show(); //Show the loader
+                    //Display the message
+                    successMessage(
+                        jsonResponse.status_code === "error" ? "error" : "success",
+                        jsonResponse.status
+                    );
 
-                    //Reload the current page
-                    setTimeout(function(){
-                        location.reload();
-                    }, 1500);
-                } else if(jsonResponse.status_code === "error") {
+                    if(jsonResponse.status_code === "success"){
+                        $("#update_product_modal").modal("hide"); //Hide the modal
+                        $("#loader-container").show(); //Show the loader
+
+                        //Reload the current page
+                        setTimeout(function(){
+                            location.reload();
+                        }, 1500);
+                    } else if(jsonResponse.status_code === "error") {
+                        $("#loader-container").hide(); //Hide the loader if there's an error
+                    }
+                }, 
+                error: function(xhr, status, error){
+                    var errorMessage = "An error occurred while updating the product.";
+                    if(xhr.responseText){
+                        errorMessage = JSON.parse(xhr.responseText).status;
+                    }
+                    errorMessage(errorMessage);
                     $("#loader-container").hide(); //Hide the loader if there's an error
                 }
-            }, 
-            error: function(xhr, status, error){
-                var errorMessage = "An error occurred while updating the product.";
-                if(xhr.responseText){
-                    errorMessage = JSON.parse(xhr.responseText).status;
-                }
-                errorMessage(errorMessage);
-                $("#loader-container").hide(); //Hide the loader if there's an error
-            }
-        })
+            })
+        }
     });
 
     //Delete Product

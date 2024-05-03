@@ -20,7 +20,7 @@
             <!-- Topbar Navbar -->
             <ul class="container p-2 navbar-nav row" style="max-width: 100%;">
                 <div class="nav-item">
-                    <h4><?= isset($_SESSION["business_name"]) ? $_SESSION["business_name"] : "Inventory Management System"; ?></h4>
+                    <h3><?= isset($_SESSION["business_name"]) ? strtoupper($_SESSION["business_name"]) : strtoupper("Inventory Management System"); ?></h3>
                 </div>
 
                 <!-- Nav Item - User Information -->
@@ -29,7 +29,7 @@
                         echo "<li class='nav-item dropdown no-arrow ml-auto'>
                         <a class='nav-link dropdown-toggle' href='#' id='userDropdown' role='button'
                             data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
-                            <span class='mr-2 d-lg-inline text-gray-600'>".$_SESSION["username"]."</span>
+                            <span class='mr-2 d-lg-inline text-gray-600'>Welcome, ".$_SESSION["username"]."</span>
                             <img class='img-profile rounded-circle'
                                 src='img/undraw_profile.svg'>
                         </a>
@@ -51,9 +51,7 @@
                         </div>
                         </li>";
                     } else {
-                        echo ("<a class='' href='".base_url."?page=login' id='login' style='font-weight: bold;'>
-                            <span class='mr-2 d-none d-lg-inline text-black'>Login</span>
-                        </a>");
+                        echo ("");
                     }
                 ?>
 

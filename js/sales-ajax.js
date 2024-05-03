@@ -60,12 +60,17 @@ $(document).ready(function(){
         event.preventDefault();
         var updateQuantity = $("#edit_quantity").val();
         var updatePayment = $("#update_select_payment").val();
+        var edit_customer_name = $("#edit_customer_name").val();
+        var edit_customer_phone = $("#edit_customer_phone").val();
 
         if(updatePayment === ""){
             errorMessage("Select a payment method");
             $("#loader-container").hide(); //Hide the loader if there's an error
         } else if (updateQuantity == 0) {
             errorMessage("Enter a quantity");
+            $("#loader-container").hide(); //Hide the loader if there's an error
+        } else if (edit_customer_name === "" || edit_customer_phone === ""){
+            errorMessage("All fields are required");
             $("#loader-container").hide(); //Hide the loader if there's an error
         } else {
             //Send the data to the PHP Script using AJAX

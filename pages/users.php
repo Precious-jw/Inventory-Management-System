@@ -57,7 +57,7 @@ if ($_SESSION['role'] != 2){
                                     $pass = '';
 
                                     foreach ($result as $row) {
-                                        if($row['role'] == 2){$pass = '****';}else{$pass = $row['pass'];}
+                                        if($row['role'] == 2){$pass = '';}else{$pass = $row['pass'];}
                                         if($row['role'] == 0){$role = 'User';}elseif($row['role'] == 1){$role = 'Assistant Admin';}else{$role = 'Admin';}
                             ?>
                                     <tr>
@@ -96,40 +96,43 @@ include('includes/user_modal.php');
 ?>
 
 <script>
-    // Get sales to update
-    function updateUser(sales_id) {
-        $("#edit_user_id").val(sales_id);
+    // Get user to update
+    function updateUser(user_id) {
+        $("#edit_user_id").val(user_id);
 
         $.post("php/users/get.php", {
-            sales_id: sales_id
+            user_id: user_id
         }, function(data, status) {
             var id = JSON.parse(data); 
-            $('#edit_product_name').val(id.products);
-            $('#edit_price').val(id.total_price / id.quantity); 
-            $('#edit_total').val(id.total_price);
-            $('#edit_quantity').val(id.quantity);
-            $('#edit_customer_name').val(id.customer_name); 
-            $('#edit_customer_phone').val(id.customer_phone); 
-            $('#update_select_payment').val(id.payment_method);
+            $('#edit_name').val(id.name);
+            $('#edit_email').val(id.email);
+            $('#edit_phone').val(id.phone);
+            $('#edit_username').val(id.username); 
+            $('#edit_role').val(id.role);
+            if (id.role == 2){
+                $('#edit_password').val(""); 
+            } else {
+                $('#edit_password').val(id.pass); 
+            }
         })
-        $("#update_sales_modal").modal("show"); //Show the modal
+        $("#update_user_modal").modal("show"); //Show the modal
     }
 
-    // Get product to update
-    function deleteUser(sales_id) {
-        $("#delete_user_id").val(sales_id);
+    // Get user to delete
+    function deleteUser(user_id) {
+        $("#delete_user_id").val(user_id);
 
-        $.post("php/sales/delete.php", {
-            sales_id: sales_id
+        $.post("php/users/delete.php", {
+            user_id: user_id
         }, function(data, status) {
             var id = JSON.parse(data);
-            $('#edit_product_name').val(id.products); 
-            $('#edit_total').val(id.total_price);
-            $('#edit_quantity').val(id.quantity);
-            $('#edit_customer_name').val(id.customer_name); 
-            $('#edit_customer_phone').val(id.customer_phone); 
-            $('#update_select_payment').val(id.payment_method);
+            $('#edit_name').val(id.name);
+            $('#edit_email').val(id.email);
+            $('#edit_phone').val(id.phone);
+            $('#edit_username').val(id.username); 
+            $('#edit_password').val(id.pass); 
+            $('#edit_role').val(id.role);
         })
-        $("#delete_sales_modal").modal("show"); //Show the modal
+        $("#delete_user_modal").modal("show"); //Show the modal
     }
 </script>

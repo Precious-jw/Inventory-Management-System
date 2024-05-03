@@ -17,15 +17,15 @@
                         <div class="col mr-2">
                             <div class="text-s font-weight-bold text-primary text-uppercase mb-1">
                                 Total Amount of Products Sold</div>
-                                <?php
-                                $sql = "SELECT SUM(total_price) AS total_amount from sales";
-                                $stmt = $conn->prepare($sql);
-                                $stmt->execute();
-                                $result = $stmt->get_result()->fetch_object()->total_amount;
-                                ?>
+                            <?php
+                            $sql = "SELECT SUM(total_price) AS total_amount from sales";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->execute();
+                            $result = $stmt->get_result()->fetch_object()->total_amount;
+                            ?>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">&#8358;<?= number_format($result); ?></div>
                             <?php
-                                $stmt->close();
+                            $stmt->close();
                             ?>
                         </div>
                         <div class="col-auto">
@@ -43,25 +43,25 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-s font-weight-bold text-success text-uppercase mb-1">
-                            Total Inventory Amount</div>
-                                <?php
-                                $final_total = 0;
-                                $sql = "SELECT * from product";
-                                $stmt = $conn->prepare($sql);
-                                $stmt->execute();
-                                $result = $stmt->get_result();
+                                Total Inventory Amount</div>
+                            <?php
+                            $final_total = 0;
+                            $sql = "SELECT * from product";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
 
-                                if ($result->num_rows > 0) {
-                                    foreach ($result as $row) {
-                                        $total = $row['purchase_price']*$row['product_qty'];
-                                        $final_total += $total;
-                                    }
+                            if ($result->num_rows > 0) {
+                                foreach ($result as $row) {
+                                    $total = $row['purchase_price'] * $row['product_qty'];
+                                    $final_total += $total;
                                 }
-                                ?>
+                            }
+                            ?>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">&#8358;<?= number_format($final_total); ?></div>
-                                <?php
-                                    $stmt->close();
-                                ?>
+                            <?php
+                            $stmt->close();
+                            ?>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -78,14 +78,14 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-s font-weight-bold text-warning text-uppercase mb-1">
-                                Number of Products in Inventory</div>
-                                <?php
-                                    $sql = "SELECT * from product";
-                                    $stmt = $conn->prepare($sql);
-                                    $stmt->execute();
-                                    $result = $stmt->get_result();
-                                ?>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $result->num_rows;?></div>
+                                Number of Different Products in Inventory</div>
+                            <?php
+                            $sql = "SELECT * from product";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+                            ?>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $result->num_rows; ?></div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -119,77 +119,72 @@
     <div class="row">
 
         <!-- Area Chart -->
-        <div class="col-xl-8 col-lg-7">
+        <div class="col">
             <div class="card shadow mb-4">
-                <!-- Card Header - Dropdown -->
-                <div
-                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
-                    <div class="dropdown no-arrow">
-                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                            aria-labelledby="dropdownMenuLink">
-                            <div class="dropdown-header">Dropdown Header:</div>
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Something else here</a>
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col">
+                            <h6 class="m-0 mt-2 text-primary text-bold">Recent Sales List</h6>
+                        </div>
+                        <div class="col-auto">
+                            <a href="<?= base_url ?>?page=sales" class="btn btn-primary btn-sm">View all</a>
                         </div>
                     </div>
                 </div>
-                <!-- Card Body -->
                 <div class="card-body">
-                    <div class="chart-area">
-                        <canvas id="myAreaChart"></canvas>
+                    <!-- Loader -->
+                    <div id="loader-container">
+                        <div class="loader"></div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered text-gray-900" id="dataTable">
+                            <thead>
+                                <tr>
+                                    <th>S/N</th>
+                                    <th>Date</th>
+                                    <th>Customer Name</th>
+                                    <th>Customer phone no.</th>
+                                    <th>List of Products</th>
+                                    <th>Qty</th>
+                                    <th>Total Price</th>
+                                    <th>Payment method</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $sql = "SELECT *, sales.id AS sales_id from sales ORDER BY sales_id DESC LIMIT 10";
+                                $stmt = $conn->prepare($sql);
+                                $stmt->execute();
+                                $result = $stmt->get_result();
+
+                                if ($result->num_rows > 0) {
+                                    $num = 1;
+
+                                    foreach ($result as $row) {
+                                ?>
+                                        <tr>
+                                            <td><?= $num; ?></td>
+                                            <td><?= $row['date']; ?></td>
+                                            <td><?= $row['customer_name']; ?></td>
+                                            <td><?= $row['customer_phone']; ?></td>
+                                            <td><?= $row['products']; ?></td>
+                                            <td><?= $row['quantity']; ?></td>
+                                            <td>&#8358;<?= number_format($row['total_price']); ?></td>
+                                            <td><?= $row['payment_method']; ?></td>
+                                        </tr>
+                                <?php
+                                        $num++;
+                                    }
+                                }
+                                $stmt->close();
+                                ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Pie Chart -->
-        <div class="col-xl-4 col-lg-5">
-            <div class="card shadow mb-4">
-                <!-- Card Header - Dropdown -->
-                <div
-                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
-                    <div class="dropdown no-arrow">
-                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                            aria-labelledby="dropdownMenuLink">
-                            <div class="dropdown-header">Dropdown Header:</div>
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Card Body -->
-                <div class="card-body">
-                    <div class="chart-pie pt-4 pb-2">
-                        <canvas id="myPieChart"></canvas>
-                    </div>
-                    <div class="mt-4 text-center small">
-                        <span class="mr-2">
-                            <i class="fas fa-circle text-primary"></i> Direct
-                        </span>
-                        <span class="mr-2">
-                            <i class="fas fa-circle text-success"></i> Social
-                        </span>
-                        <span class="mr-2">
-                            <i class="fas fa-circle text-info"></i> Referral
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
 </div>

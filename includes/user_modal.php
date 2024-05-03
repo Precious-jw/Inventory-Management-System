@@ -67,21 +67,34 @@
                 <div class="modal-body">
                         <input type="hidden" name="update_user_id" id="edit_user_id">
                     <div class="row mt-2">
-                        <div class="col-md-3 mb-3">
-                            <label class="form-label text-gray-900">Product Name</label>
-                            <input type="text" class="form-control text-gray-900" name="update_product" id="edit_product">
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label text-gray-900">Name</label>
+                            <input type="text" class="form-control text-gray-900" name="update_name" id="edit_name">
                         </div>
-                        <div class="col-md-3 mb-3">
-                            <label class="form-label text-gray-900">Purchase Price</label>
-                            <input type="number" class="form-control text-gray-900" name="update_purchase_price" id="edit_purchase_price">
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label text-gray-900">Email</label>
+                            <input type="email" class="form-control text-gray-900" name="update_email" id="edit_email">
                         </div>
-                        <div class="col-md-3 mb-3">
-                            <label class="form-label text-gray-900">Sale Price</label>
-                            <input type="number" class="form-control text-gray-900" name="update_sale_price" id="edit_sale_price">
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label text-gray-900">Phone no.</label>
+                            <input type="number" class="form-control text-gray-900" name="update_phone" id="edit_phone">
                         </div>
-                        <div class="col-md-3 mb-3">
-                            <label class="form-label text-gray-900">Quantity</label>
-                            <input type="number" class="form-control text-gray-900" name="update_qty" id="edit_qty">
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label text-gray-900">Username</label>
+                            <input type="text" class="form-control text-gray-900" name="update_username" id="edit_username">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label text-gray-900">password</label>
+                            <input type="text" class="form-control text-gray-900" name="update_password" id="edit_password">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label text-gray-900">Role</label>
+                            <select id="edit_role" name="update_role" class="form-control">
+                                <option value="">Select Role</option>
+                                <option value="0">User</option>
+                                <option value="1">Assistant Admin</option>
+                                <option value="2">Admin</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -95,18 +108,18 @@
 </div>
 
 
-<!-- Delete Product Modal -->
-<div class="modal" tabindex="-1" id="delete_product_modal" aria-hidden="true">
+<!-- Delete User Modal -->
+<div class="modal" tabindex="-1" id="delete_user_modal" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h3 class="modal-title text-red">Warning</h3>
         <button type="button" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-close"></i></button>
       </div>
-        <form id="deleteProductForm">
+        <form id="deleteUserForm">
         <div class="modal-body">
-        <input type="hidden" name="delete_product_id" id="delete_product_id">
-        <p><strong>Are you sure you want to delete this product?</strong></p>
+        <input type="hidden" name="delete_user_id" id="delete_user_id">
+        <p><strong>Are you sure you want to delete this user?</strong></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
