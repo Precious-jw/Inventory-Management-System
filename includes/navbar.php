@@ -1,6 +1,7 @@
-<?php $activePage = isset($_GET['page']) ? $_GET['page'] : 'dashboard'; 
+<?php $URL = explode("/", $_SERVER['REQUEST_URI']);
+    $activePage = file_exists("pages/".$URL[2]. ".php") ? $URL[2] : 'dashboard'; 
     if ($activePage === 'login' && isset($_SESSION['username'])){
-        header("location: http://localhost/bootstrap/");
+        header("location: http://localhost/ims/");
     }
 ?>
 
@@ -37,7 +38,7 @@
 
                 <!-- Nav Item - Products -->
                 <li class="nav-item '.($activePage == "product_master" ? "active" : "").'">
-                    <a class="nav-link" href="'.base_url.'?page=product_master">
+                    <a class="nav-link" href="'.base_url.'product_master">
                         <i class="fas fa-box"></i>
                         <span>Products</span>
                     </a>
@@ -46,7 +47,7 @@
 
                 <!-- Nav Item - Transactions -->
                 <li class="nav-item '.($activePage == "sales" ? "active" : "").'">
-                    <a class="nav-link" href="'.base_url.'?page=sales">
+                    <a class="nav-link" href="'.base_url.'sales">
                         <i class="fas fa-fw fa-cog"></i>
                         <span>Sales</span>
                     </a>
@@ -54,7 +55,7 @@
 
                 <!-- Nav Item - Transactions -->
                 <li class="nav-item '.($activePage == "users" ? "active" : "").'">
-                    <a class="nav-link" href="'.base_url.'?page=users">
+                    <a class="nav-link" href="'.base_url.'users">
                         <i class="fas fa-fw fa-users"></i>
                         <span>Manage Users</span>
                     </a>
@@ -88,7 +89,7 @@
 
                 <!-- Nav Item - Products -->
                 <li class="nav-item '.($activePage == "product_master" ? "active" : "").'">
-                    <a class="nav-link" href="'.base_url.'?page=product_master">
+                    <a class="nav-link" href="'.base_url.'product_master">
                         <i class="fas fa-box"></i>
                         <span>Products</span>
                     </a>
@@ -97,7 +98,7 @@
 
                 <!-- Nav Item - Transactions -->
                 <li class="nav-item '.($activePage == "sales" ? "active" : "").'">
-                    <a class="nav-link" href="'.base_url.'?page=sales">
+                    <a class="nav-link" href="'.base_url.'sales">
                         <i class="fas fa-fw fa-cog"></i>
                         <span>Sales</span>
                     </a>
@@ -131,7 +132,7 @@
 
                 <!-- Nav Item - Transactions -->
                 <li class="nav-item '.($activePage == "sales" ? "active" : "").'">
-                    <a class="nav-link" href="'.base_url.'?page=sales">
+                    <a class="nav-link" href="'.base_url.'sales">
                         <i class="fas fa-fw fa-cog"></i>
                         <span>Sales</span>
                     </a>
@@ -163,10 +164,10 @@
     </a>
     <div id="collapseReports" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="?page=#">Products</a>
-            <a class="collapse-item" href="?page=#">Sales</a>
-            <a class="collapse-item" href="?page=#">Purchases</a>
-            <a class="collapse-item" href="?page= #">Inventory</a>
+            <a class="collapse-item" href="#">Products</a>
+            <a class="collapse-item" href="#">Sales</a>
+            <a class="collapse-item" href="#">Purchases</a>
+            <a class="collapse-item" href=" #">Inventory</a>
         </div>
     </div>
 </li>

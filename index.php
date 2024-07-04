@@ -4,27 +4,27 @@
     include('includes/header.php');
     include('includes/navbar.php');
     include('includes/topbar.php');
+    
+    //print_r($_SERVER);
+    $URL = explode("/", $_SERVER['REQUEST_URI']);
 
-    //Check if the product is ready in the database
+    //Check if a user exists in the database
     $select = $conn->prepare("SELECT * FROM users");
     $select->execute();
     $result = $select->get_result();
 
-    if($result->num_rows === 0){
-        session_destroy();
-        $pages = 'pages/register.php';
-    } elseif (!isset($_SESSION['username'])){
-        $pages = 'pages/login.php';
-    } elseif (isset($_GET['page'])){
-        $pages = 'pages/' . $_GET['page'] . '.php';
+    if (file_exists("pages/".$URL[2]. ".php")){
+        if($result->num_rows === 0){
+            session_destroy();
+            require_once("pages/register.php");
+        } elseif (!isset($_SESSION['username'])) {
+            require_once("pages/login.php");
+        } else {
+            require_once("pages/".$URL[2]. ".php");
+        }
     } else {
-        $pages = 'pages/dashboard.php';
-    }
-
-    if(file_exists($pages)){
-        require_once $pages;
+        require_once("pages/dashboard.php");
     }
 
     include('includes/footer.php');
-
 ?>
