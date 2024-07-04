@@ -27,4 +27,5 @@
     }
 
     include('includes/footer.php');
+    
 ?>
