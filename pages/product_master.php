@@ -2,7 +2,7 @@
 include("config/db_conn.php");
 
 if ($_SESSION['role'] == 0){
-    redirect("http://localhost/bootstrap/");
+    redirect("http://localhost/ims/");
 }
 ?>
 <!-- Begin Page Content -->

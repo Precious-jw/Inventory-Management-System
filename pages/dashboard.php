@@ -1,3 +1,10 @@
+<?php
+
+if (!isset($_SESSION['username'])){
+    redirect(base_url."dashboard");
+}   
+?>
+
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
@@ -127,7 +134,7 @@
                             <h6 class="m-0 mt-2 text-primary text-bold">Recent Sales List</h6>
                         </div>
                         <div class="col-auto">
-                            <a href="<?= base_url ?>?page=sales" class="btn btn-primary btn-sm">View all</a>
+                            <a href="<?= base_url ?>sales" class="btn btn-primary btn-sm">View all</a>
                         </div>
                     </div>
                 </div>

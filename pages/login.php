@@ -1,3 +1,11 @@
+<?php
+
+if (isset($_SESSION['username'])){
+    redirect(base_url."dashboard");
+}
+        
+?>
+
  <!-- Loader -->
  <div id="loader-container">
     <div class="loader"></div>
