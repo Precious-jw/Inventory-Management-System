@@ -1,8 +1,5 @@
 <?php $URL = explode("/", $_SERVER['REQUEST_URI']);
     $activePage = file_exists("pages/".$URL[2]. ".php") ? $URL[2] : 'dashboard'; 
-    if ($activePage === 'login' && isset($_SESSION['username'])){
-        header("location: http://localhost/ims/");
-    }
 ?>
 
 <!-- Sidebar -->

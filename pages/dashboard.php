@@ -1,7 +1,7 @@
 <?php
 
 if (!isset($_SESSION['username'])){
-    redirect(base_url."dashboard");
+    redirect(base_url."login");
 }   
 ?>
 
