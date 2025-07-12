@@ -5,11 +5,13 @@ include("../../config/db_conn.php");
 if (isset($_POST['update_sale_id'])) {
     $sale_id = $_POST['update_sale_id'];
     $product = $_POST['update_product'];
+    $purchase_price = $_POST['update_purchase_price'];
     $quantity = $_POST['update_quantity'];
     $payment = $_POST['update_payment'];
     $customer_name = $_POST['update_customer_name'];
     $customer_phone = $_POST['update_customer_phone'];
     $price = $_POST['update_total'];
+    $discount = $_POST['update_discount'];
 
     //Return former product quantity to the database
     $select_sale = $conn->prepare("SELECT * FROM sales WHERE id = ?");
@@ -40,8 +42,8 @@ if (isset($_POST['update_sale_id'])) {
                     } else {
                         //Insert Product and update product quantity in database
                         $qty_left = $qty_update - $entered_qty;
-                        $stmt_insert = $conn->prepare("UPDATE sales SET customer_name=?, customer_phone=?, products=?, quantity=?, total_price=?, payment_method=? WHERE id = ?");
-                        $stmt_insert->bind_param("sisiisi", $customer_name, $customer_phone, $product, $quantity, $price, $payment, $sale_id);
+                        $stmt_insert = $conn->prepare("UPDATE sales SET customer_name=?, customer_phone=?, products=?, purchase_price=?, quantity=?, discount=?, total_price=?, payment_method=? WHERE id = ?");
+                        $stmt_insert->bind_param("sisiiiisi", $customer_name, $customer_phone, $product, $purchase_price, $quantity, $discount, $price, $payment, $sale_id);
                         $stmt_update = $conn->prepare("UPDATE product SET product_qty=? WHERE product_name = ?");
                         $stmt_update->bind_param("is", $qty_left, $product);
 
@@ -77,8 +79,8 @@ if (isset($_POST['update_sale_id'])) {
                                 $qty_left = $available_qty - $entered_qty;
                                 $stmt_return = $conn->prepare("UPDATE product SET product_qty=? WHERE product_name = ?");
                                 $stmt_return->bind_param("is", $final_return_qty, $return_product);
-                                $stmt_insert = $conn->prepare("UPDATE sales SET customer_name=?, customer_phone=?, products=?, quantity=?, total_price=?, payment_method=? WHERE id = ?");
-                                $stmt_insert->bind_param("sisiisi", $customer_name, $customer_phone, $product, $quantity, $price, $payment, $sale_id);
+                                $stmt_insert = $conn->prepare("UPDATE sales SET customer_name=?, customer_phone=?, products=?, purchase_price=?, quantity=?, discount=?, total_price=?, payment_method=? WHERE id = ?");
+                                $stmt_insert->bind_param("sisiiisi", $customer_name, $customer_phone, $product, $purchase_price, $quantity, $discount, $price, $payment, $sale_id);
                                 $stmt_update = $conn->prepare("UPDATE product SET product_qty=? WHERE product_name = ?");
                                 $stmt_update->bind_param("is", $qty_left, $product);
 

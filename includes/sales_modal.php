@@ -18,11 +18,9 @@
                                 <tr>
                                     <th>Select Product</th>
                                     <th>Product Name</th>
-                                    <th>Price</th>
+                                    <th>Price (&#8358;)</th>
                                     <th>Qty</th>
                                     <th>Total</th>
-                                    <th>Payment Method</th>
-                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody id="rowContainer">
@@ -50,17 +48,9 @@
                                         </select>
                                     </td>
                                     <td><input type="text" readonly class="form-control text-gray-900" name="product[]" id="product_name" value=""></td>
-                                    <td><input type="number" readonly class="form-control text-gray-900" name="purchase_price[]" id="purchase_price" value="&#8358;00.00"></td>
+                                    <td><input type="number" readonly class="form-control text-gray-900" name="purchase_price[]" id="purchase_price" value=""></td>
                                     <td><input type="number" class="form-control text-gray-900" name="quantity[]" id="quantity" placeholder="Enter Quantity"></td>
                                     <td><input type="text" readonly class="form-control text-gray-900" name="total[]" id="total" value="&#8358;00.00"></td>
-                                    <td><select id="select_payment" name="payment[]" class="form-control">
-                                            <option value="">Select Method</option>
-                                            <option value="Cash">Cash</option>
-                                            <option value="Transfer">Transfer</option>
-                                            <option value="POS">POS</option>
-                                        </select>
-                                    </td>
-                                    <td><button type="button" class="btn btn-danger btn-sm removeRow">Remove</button></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -72,12 +62,22 @@
                                 <tr>
                                     <th>Customer Name</th>
                                     <th>Customer Phone Number</th>
-                                    <th>Total Amount of all Items</th>
+                                    <th>Payment Method</th>
+                                    <th>Discount Amount (&#8358;)</th>
+                                    <th>Final Amount</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <td><input type="text" class="form-control text-gray-900" name="customer_name[]" id="customer_name" placeholder="Enter Customer Name"></td>
                                 <td><input type="number" class="form-control text-gray-900" name="customer_phone[]" id="customer_phone" placeholder="Enter Customer Phone No."></td>
+                                <td><select id="select_payment" name="payment[]" class="form-control">
+                                        <option value="">Select Method</option>
+                                        <option value="Cash">Cash</option>
+                                        <option value="Transfer">Transfer</option>
+                                        <option value="POS">POS</option>
+                                    </select>
+                                </td>
+                                <td><input type="number" class="form-control text-gray-900" name="discount[]" id="discount" value="" placeholder="00.00"></td>
                                 <td><input type="number" readonly class="form-control text-gray-900" name="grand_total[]" id="grand_total" placeholder="&#8358;00.00"></td>
                             </tbody>
                         </table>
@@ -159,12 +159,14 @@
                                 <tr>
                                     <th>Customer Name</th>
                                     <th>Customer Phone Number</th>
+                                    <th>Discount Amount (&#8358;)</th>
                                     <th>Total</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <td><input type="text" class="form-control text-gray-900" name="update_customer_name" id="edit_customer_name" placeholder="Enter Customer Name"></td>
                                 <td><input type="number" class="form-control text-gray-900" name="update_customer_phone" id="edit_customer_phone" placeholder="Enter Customer Phone No."></td>
+                                <td><input type="number" class="form-control text-gray-900" name="update_discount" id="edit_discount" value="" placeholder="00.00"></td>
                                 <td><input type="number" readonly class="form-control text-gray-900" name="update_total" id="edit_total" placeholder="&#8358;00.00"></td>
                             </tbody>
                         </table>
@@ -216,15 +218,16 @@
             var total = $('#total').val(price * quantity);
         }
         function edit_total(){
-            var editPrice = $('#edit_price').val();
+            var editPrice = $('#edit_price').val();     
+            var updateDiscount = $('#edit_discount').val();
             var editQuantity = $('#edit_quantity').val();
-            var editTotal = $('#edit_total').val(editPrice * editQuantity);
+            var editTotal = $('#edit_total').val(editPrice * editQuantity - updateDiscount);
         }
 
         function cal_final_total() {
-            var total = $('#total').val();
-            var final_total = $('#grand_total').val(total);
-            var grand_total = grand_total + final_total;
+            var total = $('#total').val();            
+            var discount = $('#discount').val();
+            var final_total = $('#grand_total').val(total - discount);
         }
 
         $('#quantity').keyup(function() {
@@ -234,7 +237,12 @@
         $('#edit_quantity').keyup(function() {
             edit_total();
         });
-
+        $('#discount').keyup(function() {
+            cal_final_total();
+        });
+        $('#edit_discount').keyup(function() {
+            edit_total();
+        });
     });
 
     // add the following onChange script
@@ -243,7 +251,7 @@
             var price = $(this);
             var purchase_price = $('#purchase_price').val(price.val());
             var name = $("#product_name").val(this.options[this.selectedIndex].text);
-            var quantity = $('#quantity').val(0);
+            var quantity = $('#quantity').val("");
             var total = $('#total').val("00.00");
             var final_total = $('#grand_total').val("00.00");
         })

@@ -50,6 +50,14 @@
                     </a>
                 </li>
 
+                <!-- Nav Item - Expenses -->
+                <li class="nav-item '.($activePage == "expenses" ? "active" : "").'">
+                    <a class="nav-link" href="'.base_url.'expenses">
+                        <i class="fas fa-fw fa-cog"></i>
+                        <span>Expenses</span>
+                    </a>
+                </li>
+
                 <!-- Nav Item - Transactions -->
                 <li class="nav-item '.($activePage == "users" ? "active" : "").'">
                     <a class="nav-link" href="'.base_url.'users">
@@ -98,6 +106,14 @@
                     <a class="nav-link" href="'.base_url.'sales">
                         <i class="fas fa-fw fa-cog"></i>
                         <span>Sales</span>
+                    </a>
+                </li>
+
+                <!-- Nav Item - Expenses -->
+                <li class="nav-item '.($activePage == "expenses" ? "active" : "").'">
+                    <a class="nav-link" href="'.base_url.'expenses">
+                        <i class="fas fa-fw fa-cog"></i>
+                        <span>Expenses</span>
                     </a>
                 </li>
                 

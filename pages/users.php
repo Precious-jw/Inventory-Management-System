@@ -62,7 +62,7 @@ if ($_SESSION['role'] != 2){
                             ?>
                                     <tr>
                                         <td><?= $num; ?></td>
-                                        <td><?= $row['date']; ?></td>
+                                        <td><?= date('d-M-Y, D H:i A', strtotime($row['date'])); ?></td>
                                         <td><?= $row['name']; ?></td>
                                         <td><?= $row['email']; ?></td>
                                         <td><?= $row['phone']; ?></td>

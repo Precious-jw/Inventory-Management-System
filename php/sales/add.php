@@ -6,7 +6,9 @@
         $customer_names = $_POST['customer_name'];
         $customer_phones = $_POST['customer_phone'];
         $products = $_POST['product'];
+        $purchase_prices = $_POST['purchase_price'];
         $quantitys = $_POST['quantity'];
+        $discounts = $_POST['discount'];
         $prices = $_POST['grand_total'];
         $payments = $_POST['payment'];
 
@@ -15,7 +17,9 @@
             $customer_name = $customer_names[$i];
             $customer_phone = $customer_phones[$i];
             $product = $products[$i];
+            $purchase_price = $purchase_prices[$i];
             $quantity = $quantitys[$i];
+            $discount = $discounts[$i];
             $price = $prices[$i];
             $payment = $payments[$i];
 
@@ -36,8 +40,8 @@
                     } else{
                         //Insert Product and update product quantity in database
                         $qty_left = $available_qty - $entered_qty;
-                        $stmt_insert = $conn->prepare("INSERT INTO sales (customer_name, customer_phone, products, quantity, total_price, payment_method) VALUES (?, ?, ?, ?, ?, ?)");
-                        $stmt_insert->bind_param("sisiis", $customer_name, $customer_phone, $product, $entered_qty, $price, $payment);
+                        $stmt_insert = $conn->prepare("INSERT INTO sales (customer_name, customer_phone, products, purchase_price, quantity, discount, total_price, payment_method) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                        $stmt_insert->bind_param("sisiiiis", $customer_name, $customer_phone, $product, $purchase_price, $entered_qty, $discount, $price, $payment);
                         $stmt_update = $conn->prepare("UPDATE product SET product_qty=? WHERE product_name = ?");
                         $stmt_update->bind_param("is", $qty_left, $product);
         

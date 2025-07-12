@@ -30,6 +30,7 @@
 
 
 <!-- Ajax-->
+<script src="js/expenses-ajax.js"></script>
 <script src="js/product-ajax.js"></script>
 <script src="js/sales-ajax.js"></script>
 <script src="js/users-ajax.js"></script>

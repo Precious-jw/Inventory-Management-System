@@ -171,7 +171,7 @@ if (!isset($_SESSION['username'])){
                                 ?>
                                         <tr>
                                             <td><?= $num; ?></td>
-                                            <td><?= $row['date']; ?></td>
+                                            <td><?= date('d-M-Y, D H:i A', strtotime($row['date'])); ?></td>
                                             <td><?= $row['customer_name']; ?></td>
                                             <td><?= $row['customer_phone']; ?></td>
                                             <td><?= $row['products']; ?></td>
