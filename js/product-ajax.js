@@ -7,9 +7,12 @@ $(document).ready(function(){
         var product_name = $("#product").val();
         var purchase_price = $("#purchase_price").val();
         var sale_price = $("#sale_price").val();
+        var retail_price = $("#retail_price").val();
+        var quantity = $("#quantity").val();
+        var threshold = $("#threshold").val();
 
         //Check if the input fields are empty
-        if(product_name === "" || purchase_price === "" || sale_price === ""){
+        if(product_name === "" || purchase_price === "" || sale_price === "" || retail_price === "" || quantity === "" || threshold === ""){
             errorMessage("All fields are required");
             $("#loader-container").hide(); //Hide the loader if there's an error
         } else {
@@ -17,7 +20,7 @@ $(document).ready(function(){
             $.ajax({
                 type: "POST",
                 url: "php/product/add.php",
-                data: $(this).serialize() + "$action=saveProduct",
+                data: $(this).serialize() + "&action=saveProduct",
                 success: function (response){
                     var jsonResponse = JSON.parse(response);
 
@@ -60,10 +63,12 @@ $(document).ready(function(){
         var product_name = $("#edit_product").val();
         var purchase_price = $("#edit_purchase_price").val();
         var sale_price = $("#edit_sale_price").val();
+        var retail_price = $("#edit_retail_price").val();
         var edit_qty = $("#edit_qty").val();
+        var edit_threshold = $("#edit_threshold").val();
 
         //Check if the input fields are empty
-        if(product_name === "" || purchase_price === "" || sale_price === "" || edit_qty == ""){
+        if(product_name === "" || purchase_price === "" || sale_price === "" || retail_price === "" || edit_qty == "" || edit_threshold == ""){
             errorMessage("All fields are required");
             $("#loader-container").hide(); //Hide the loader if there's an error
         } else {
@@ -71,7 +76,7 @@ $(document).ready(function(){
             $.ajax({
                 type: "POST",
                 url: "php/product/update.php",
-                data: $(this).serialize() + "$action=updateProduct",
+                data: $(this).serialize() + "&action=updateProduct",
                 success: function (response){
                     var jsonResponse = JSON.parse(response);
 
@@ -113,7 +118,7 @@ $(document).ready(function(){
         $.ajax({
             type: "POST",
             url: "php/product/delete.php",
-            data: $(this).serialize() + "$action=deleteProduct",
+            data: $(this).serialize() + "&action=deleteProduct",
             success: function (response){
                 var jsonResponse = JSON.parse(response);
 

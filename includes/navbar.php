@@ -45,7 +45,7 @@
                 <!-- Nav Item - Transactions -->
                 <li class="nav-item '.($activePage == "sales" ? "active" : "").'">
                     <a class="nav-link" href="'.base_url.'sales">
-                        <i class="fas fa-fw fa-cog"></i>
+                        <i class="fas fa-fw fa-dollar-sign"></i>
                         <span>Sales</span>
                     </a>
                 </li>
@@ -53,7 +53,7 @@
                 <!-- Nav Item - Expenses -->
                 <li class="nav-item '.($activePage == "expenses" ? "active" : "").'">
                     <a class="nav-link" href="'.base_url.'expenses">
-                        <i class="fas fa-fw fa-cog"></i>
+                        <i class="fas fa-fw fa-money-bill-wave"></i>
                         <span>Expenses</span>
                     </a>
                 </li>
@@ -104,7 +104,7 @@
                 <!-- Nav Item - Transactions -->
                 <li class="nav-item '.($activePage == "sales" ? "active" : "").'">
                     <a class="nav-link" href="'.base_url.'sales">
-                        <i class="fas fa-fw fa-cog"></i>
+                        <i class="fas fa-fw fa-dollar-sign"></i>
                         <span>Sales</span>
                     </a>
                 </li>
@@ -112,7 +112,7 @@
                 <!-- Nav Item - Expenses -->
                 <li class="nav-item '.($activePage == "expenses" ? "active" : "").'">
                     <a class="nav-link" href="'.base_url.'expenses">
-                        <i class="fas fa-fw fa-cog"></i>
+                        <i class="fas fa-fw fa-money-bill-wave"></i>
                         <span>Expenses</span>
                     </a>
                 </li>
@@ -146,7 +146,7 @@
                 <!-- Nav Item - Transactions -->
                 <li class="nav-item '.($activePage == "sales" ? "active" : "").'">
                     <a class="nav-link" href="'.base_url.'sales">
-                        <i class="fas fa-fw fa-cog"></i>
+                        <i class="fas fa-fw fa-dollar-sign"></i>
                         <span>Sales</span>
                     </a>
                 </li>

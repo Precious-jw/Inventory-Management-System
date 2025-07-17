@@ -5,13 +5,17 @@ include("../../config/db_conn.php");
 if (isset($_POST['update_product_id'])) {
     $product_id = $_POST['update_product_id'];
     $product_name = $_POST['update_product'];
-    $purchase_prices = $_POST['update_purchase_price'];
-    $sale_prices = $_POST['update_sale_price'];
+    $product_code = $_POST['update_product_code'];
+    $purchase_price = $_POST['update_purchase_price'];
+    $sale_price = $_POST['update_sale_price'];
+    $retail_price = $_POST['update_retail_price'];
     $qty = $_POST['update_qty'];
+    $threshold = $_POST['update_threshold'];
+    $company = $_POST['update_company'];
 
     //Update the database
-    $stmt_update = $conn->prepare("UPDATE product SET product_name=?, purchase_price=?, sale_price=?, product_qty=? WHERE id = ?");
-    $stmt_update->bind_param("siiii", $product_name, $purchase_prices, $sale_prices, $qty, $product_id);
+    $stmt_update = $conn->prepare("UPDATE product SET product_name=?, product_code=?, purchase_price=?, sale_price=?, retail_price=?, product_qty=?, threshold=?, company=? WHERE id = ?");
+    $stmt_update->bind_param("ssiiiiisi", $product_name, $product_code, $purchase_price, $sale_price, $retail_price, $qty, $threshold, $company, $product_id);
 
     if ($stmt_update->execute()) {
         $response['status'] = 'Product updated successfully.';

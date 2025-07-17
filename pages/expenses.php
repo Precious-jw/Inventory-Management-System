@@ -73,132 +73,46 @@ if ($_SESSION['role'] == 0){
                     </thead>
                     <tbody>
                         <?php
+                            if (isset($_POST['search'])) {
+                                $conditions = [];
+                                $params = [];
+                                $types = "";
 
-                            if(ISSET($_POST['search'])){
-                                if(!empty($_POST['dateFrom']) && !empty($_POST['dateTo'])){
-                                    $dateFrom = $_POST['dateFrom'];
-                                    $dateTo = $_POST['dateTo'];
-                                    $stmt = $conn->prepare("SELECT *, expenses.id as expenses_id from expenses WHERE date >='$dateFrom' AND date < '$dateTo' + INTERVAL 1 DAY");
-                                    $stmt->execute();
-
-                                    $result = $stmt->get_result();
-                                    
-                                    if ($result->num_rows > 0) {
-                                        $num = 1;
-
-                                        foreach ($result as $row) {
-                            ?>
-                                    <tr>
-                                        <td><?= $num; ?></td>
-                                        <td><?= $row['entered_by']; ?></td>
-                                        <td><?= $row['descr']; ?></td>
-                                        <td>&#8358;<?= number_format($row['amount']); ?></td>
-                                        <td><?= date('d-M-Y, D H:i A', strtotime($row['date'])); ?></td>
-                                        <td>
-                                            <button class="btn btn-primary btn-sm" onclick="updateExpenses(<?= $row['expenses_id']; ?>)">Update</button>
-                                            <button class="btn btn-danger btn-sm" onclick="deleteExpenses(<?= $row['expenses_id']; ?>)">Delete</button>
-                                        </td>
-                                    </tr>
-                            <?php
-                                            $num++;
-                                        }
-                                    }  
-                                } else if(!empty($_POST['dateFrom'])){
-                                    $dateFrom = $_POST['dateFrom'];
-                                    $stmt = $conn->prepare("SELECT *, expenses.id as expenses_id from expenses WHERE date >='$dateFrom'");
-                                    $stmt->execute();
-
-                                    $result = $stmt->get_result();
-                                    
-                                    if ($result->num_rows > 0) {
-                                        $num = 1;
-
-                                        foreach ($result as $row) {
-                            ?>
-                                    <tr>
-                                        <td><?= $num; ?></td>
-                                        <td><?= $row['entered_by']; ?></td>
-                                        <td><?= $row['descr']; ?></td>
-                                        <td>&#8358;<?= number_format($row['amount']); ?></td>
-                                        <td><?= date('d-M-Y, D H:i A', strtotime($row['date'])); ?></td>
-                                        <td>
-                                            <button class="btn btn-primary btn-sm" onclick="updateExpenses(<?= $row['expenses_id']; ?>)">Update</button>
-                                            <button class="btn btn-danger btn-sm" onclick="deleteExpenses(<?= $row['expenses_id']; ?>)">Delete</button>
-                                        </td>
-                                    </tr>
-                            <?php
-                                            $num++;
-                                        }
-                                    }  
-                                } else if(!empty($_POST['dateTo'])){
-                                    $dateTo = $_POST['dateTo'];
-                                    $stmt = $conn->prepare("SELECT *, expenses.id as expenses_id from expenses WHERE date < '$dateTo' + INTERVAL 1 DAY");
-                                    $stmt->execute();
-
-                                    $result = $stmt->get_result();
-                                    
-                                    if ($result->num_rows > 0) {
-                                        $num = 1;
-
-                                        foreach ($result as $row) {
-                            ?>
-                                    <tr>
-                                        <td><?= $num; ?></td>
-                                        <td><?= $row['entered_by']; ?></td>
-                                        <td><?= $row['descr']; ?></td>
-                                        <td>&#8358;<?= number_format($row['amount']); ?></td>
-                                        <td><?= date('d-M-Y, D H:i A', strtotime($row['date'])); ?></td>
-                                        <td>
-                                            <button class="btn btn-primary btn-sm" onclick="updateExpenses(<?= $row['expenses_id']; ?>)">Update</button>
-                                            <button class="btn btn-danger btn-sm" onclick="deleteExpenses(<?= $row['expenses_id']; ?>)">Delete</button>
-                                        </td>
-                                    </tr>
-                            <?php
-                                            $num++;
-                                        }
-                                    }  
-                                } else {
-                                    $sql = "SELECT *, expenses.id as expenses_id from expenses";
-                                    $stmt = $conn->prepare($sql);
-                                    $stmt->execute();
-                                    $result = $stmt->get_result();
-
-                                    if ($result->num_rows > 0) {
-                                        $num = 1;
-
-                                        foreach ($result as $row) {
-                            ?>
-                                    <tr>
-                                        <td><?= $num; ?></td>
-                                        <td><?= $row['entered_by']; ?></td>
-                                        <td><?= $row['descr']; ?></td>
-                                        <td>&#8358;<?= number_format($row['amount']); ?></td>
-                                        <td><?= date('d-M-Y, D H:i A', strtotime($row['date'])); ?></td>
-                                        <td>
-                                            <button class="btn btn-primary btn-sm" onclick="updateExpenses(<?= $row['expenses_id']; ?>)">Update</button>
-                                            <button class="btn btn-danger btn-sm" onclick="deleteExpenses(<?= $row['expenses_id']; ?>)">Delete</button>
-                                        </td>
-                                    </tr>
-                            <?php
-                                            $num++;
-                                        }
-                                    }
+                                if (!empty($_POST['dateFrom'])) {
+                                    $conditions[] = "date >= ?";
+                                    $params[] = $_POST['dateFrom'];
+                                    $types .= "s";
                                 }
-                                
-                            } else {
 
-                                $sql = "SELECT *, expenses.id as expenses_id from expenses";
+                                if (!empty($_POST['dateTo'])) {
+                                    $conditions[] = "date < ? + INTERVAL 1 DAY";
+                                    $params[] = $_POST['dateTo'];
+                                    $types .= "s";
+                                }
+
+                                $sql = "SELECT *, expenses.id as expenses_id FROM expenses";
+                                if (!empty($conditions)) {
+                                    $sql .= " WHERE " . implode(" AND ", $conditions);
+                                }
+
                                 $stmt = $conn->prepare($sql);
+                                if (!empty($params)) {
+                                    $stmt->bind_param($types, ...$params);
+                                }
                                 $stmt->execute();
                                 $result = $stmt->get_result();
-
-                                if ($result->num_rows > 0) {
-                                    $num = 1;
-
-                                    foreach ($result as $row) {
+                            } else {
+                                $stmt = $conn->prepare("SELECT *, expenses.id as expenses_id FROM expenses");
+                                $stmt->execute();
+                                $result = $stmt->get_result();
+                            }
                         ?>
+
+                        <?php if ($result->num_rows > 0): ?>
+                            <?php $num = 1; ?>
+                            <?php foreach ($result as $row): ?>
                                 <tr>
-                                    <td><?= $num; ?></td>
+                                    <td><?= $num++; ?></td>
                                     <td><?= $row['entered_by']; ?></td>
                                     <td><?= $row['descr']; ?></td>
                                     <td>&#8358;<?= number_format($row['amount']); ?></td>
@@ -208,13 +122,11 @@ if ($_SESSION['role'] == 0){
                                         <button class="btn btn-danger btn-sm" onclick="deleteExpenses(<?= $row['expenses_id']; ?>)">Delete</button>
                                     </td>
                                 </tr>
-                        <?php
-                                        $num++;
-                                    }
-                                }
-                            }
-                            $stmt->close();
-                        ?>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+
+                        <?php $stmt->close(); ?>
+
                     </tbody>
                 </table>
             </div>

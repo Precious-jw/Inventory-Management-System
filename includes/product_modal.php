@@ -1,47 +1,60 @@
 <!-- Add Product Modal -->
 <div class="modal fade" id="add_product_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title fs-5 text-gray-900" id="exampleModalLabel">Add Product</h5>
-                <div class="row">
-                    <div class="col">
-                        <button type="button" class="btn btn-primary btn-sm" id="addRow">Add Row</button>
-                    </div>
-                </div>
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title fs-5 text-gray-900" id="exampleModalLabel">Add Product</h5>
+      </div>
+      <form id="productForm" action="saveProduct">
+        <div class="modal-body">
+          <div class="container-fluid">
+            <div class="row g-3 mb-4">
+              <div class="col-md-3">
+                <label for="product" class="form-label text-black">Product Name</label>
+                <input type="text" class="form-control text-gray-900" name="product" id="product">
+              </div>
+              <div class="col-md-3">
+                <label for="purchase_price" class="form-label text-black">Purchase Price</label>
+                <input type="number" class="form-control text-gray-900" name="purchase_price" id="purchase_price">
+              </div>
+              <div class="col-md-3">
+                <label for="sale_price" class="form-label text-black">Wholesale Price</label>
+                <input type="number" class="form-control text-gray-900" name="sale_price" id="sale_price">
+              </div>
+              <div class="col-md-3">
+                <label for="retail_price" class="form-label text-black">Retail Price</label>
+                <input type="number" class="form-control text-gray-900" name="retail_price" id="retail_price">
+              </div>
             </div>
-            <form id="productForm" action="saveProduct">
-                <div class="modal-body">
-                    <div class="container table-responsive">
-                        <table class="table table-bordered text-gray-900 mt-2">
-                            <thead>
-                                <tr>
-                                    <th>Product Name</th>
-                                    <th>Purchase Price</th>
-                                    <th>Sale Price</th>
-                                    <th>Product Quantity</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody id="rowContainer">
-                                <tr>
-                                    <td><input type="text" class="form-control text-gray-900" name="product[]" id="product" placeholder="Enter Product Name"></td>
-                                    <td><input type="number" class="form-control text-gray-900" name="purchase_price[]" id="purchase_price" placeholder="Enter Purchase Price"></td>
-                                    <td><input type="number" class="form-control text-gray-900" name="sale_price[]" id="sale_price" placeholder="Enter Sale Price"></td>
-                                    <td><input type="number" class="form-control text-gray-900" name="quantity[]" id="quantity" placeholder="Enter Quantity"></td>
-                                    <td><button type="button" class="btn btn-danger btn-sm removeRow">Remove</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" name="submit[]" class="btn btn-primary">Save</button>
-                </div>
-            </form>
+
+            <div class="row g-3 mb-4">
+              <div class="col-md-3">
+                <label for="product_code" class="form-label text-black">Product Code</label>
+                <input type="text" class="form-control text-gray-900" name="product_code" id="product_code">
+              </div>
+              <div class="col-md-3">
+                <label for="quantity" class="form-label text-black">Quantity</label>
+                <input type="number" class="form-control text-gray-900" name="quantity" id="quantity">
+              </div>
+              <div class="col-md-3">
+                <label for="threshold" class="form-label text-black">Low Stock Limit</label>
+                <input type="number" class="form-control text-gray-900" name="threshold" id="threshold">
+              </div>
+              <div class="col-md-3">
+                <label for="company_name" class="form-label text-black">Company Name</label>
+                <input type="text" class="form-control text-gray-900" name="company_name" id="company_name">
+              </div>
+            </div>
+          </div>
         </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" name="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
     </div>
+  </div>
 </div>
 
 
@@ -65,12 +78,30 @@
                             <input type="number" class="form-control text-gray-900" name="update_purchase_price" id="edit_purchase_price">
                         </div>
                         <div class="col-md-3 mb-3">
-                            <label class="form-label text-gray-900">Sale Price</label>
+                            <label class="form-label text-gray-900">Wholesale Price</label>
                             <input type="number" class="form-control text-gray-900" name="update_sale_price" id="edit_sale_price">
                         </div>
                         <div class="col-md-3 mb-3">
-                            <label class="form-label text-gray-900">Quantity</label>
+                            <label class="form-label text-gray-900">Retail Price</label>
+                            <input type="number" class="form-control text-gray-900" name="update_retail_price" id="edit_retail_price">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-3 mb-3">
+                            <label class="form-label text-gray-900">Product Code</label>
+                            <input type="text" class="form-control text-gray-900" name="update_product_code" id="edit_product_code">
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label class="form-label text-gray-900">Product Quantity</label>
                             <input type="number" class="form-control text-gray-900" name="update_qty" id="edit_qty">
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label class="form-label text-gray-900">Low Stock Limit</label>
+                            <input type="number" class="form-control text-gray-900" name="update_threshold" id="edit_threshold">
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label class="form-label text-gray-900">Company Name</label>
+                            <input type="text" class="form-control text-gray-900" name="update_company" id="edit_company">
                         </div>
                     </div>
                 </div>
@@ -106,7 +137,7 @@
 </div>
 
 
-<script>
+<!-- <script>
     document.addEventListener("DOMContentLoaded", function() {
         const addRow = document.getElementById("addRow");
         const rowContainer = document.getElementById("rowContainer");
@@ -143,4 +174,4 @@
             }
         })
     });
-</script>
+</script> -->
