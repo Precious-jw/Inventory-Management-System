@@ -2,8 +2,20 @@
     $activePage = file_exists("pages/".$URL[2]. ".php") ? $URL[2] : 'dashboard'; 
 ?>
 
+<style>
+    .side-nav-bar{
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        background-color: #f8f9fa;
+        overflow-y: auto;
+        z-index: 1000;
+    }
+</style>
+
 <!-- Sidebar -->
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion sticky-top" id="accordionSidebar">
+<ul class="navbar-nav bg-gradient-primary side-nav-bar sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="./">
@@ -55,6 +67,22 @@
                     <a class="nav-link" href="'.base_url.'expenses">
                         <i class="fas fa-fw fa-money-bill-wave"></i>
                         <span>Expenses</span>
+                    </a>
+                </li>
+
+                <!-- Nav Item - Purchases -->
+                <li class="nav-item '.($activePage == "purchases" ? "active" : "").'">
+                    <a class="nav-link" href="'.base_url.'purchases">
+                        <i class="fas fa-fw fa-shopping-cart"></i>
+                        <span>Purchases</span>
+                    </a>
+                </li>
+
+                <!-- Nav Item - Salary -->
+                <li class="nav-item '.($activePage == "salary" ? "active" : "").'">
+                    <a class="nav-link" href="'.base_url.'salary">
+                        <i class="fas fa-fw fa-dollar-sign"></i>
+                        <span>Pay Salary</span>
                     </a>
                 </li>
 
@@ -114,6 +142,14 @@
                     <a class="nav-link" href="'.base_url.'expenses">
                         <i class="fas fa-fw fa-money-bill-wave"></i>
                         <span>Expenses</span>
+                    </a>
+                </li>
+
+                <!-- Nav Item - Purchases -->
+                <li class="nav-item '.($activePage == "purchases" ? "active" : "").'">
+                    <a class="nav-link" href="'.base_url.'purchases">
+                        <i class="fas fa-fw fa-shopping-cart"></i>
+                        <span>Purchases</span>
                     </a>
                 </li>
                 

@@ -24,7 +24,7 @@
         } else {
             //Insert Product
             $stmt_insert = $conn->prepare("INSERT INTO product (product_name, product_code, purchase_price, sale_price, retail_price, product_qty, threshold, company) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt_insert->bind_param("ssiiiiis", $product, $product_code, $purchase_price, $sale_price, $retail_price, $quantity, $threshold, $company);
+            $stmt_insert->bind_param("ssddddds", $product, $product_code, $purchase_price, $sale_price, $retail_price, $quantity, $threshold, $company);
 
             if($stmt_insert->execute()){
                 $response['status'] = 'Product added successfully.';

@@ -4583,3 +4583,6 @@ readers do not read off random characters that represent icons */
   overflow: visible;
   position: static;
   width: auto; }
+
+
+//Edit conn.db file and index.php file

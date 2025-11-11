@@ -2,121 +2,66 @@
 session_start();
 include("../../config/db_conn.php");
 
-if (isset($_POST['update_sale_id'])) {
-    $sale_id = $_POST['update_sale_id'];
-    $product = $_POST['update_product'];
-    $purchase_price = $_POST['update_purchase_price'];
-    $quantity = $_POST['update_quantity'];
-    $payment = $_POST['update_payment'];
-    $customer_name = $_POST['update_customer_name'];
-    $customer_phone = $_POST['update_customer_phone'];
-    $price = $_POST['update_total'];
-    $discount = $_POST['update_discount'];
+$data = json_decode(file_get_contents("php://input"), true);
 
-    //Return former product quantity to the database
-    $select_sale = $conn->prepare("SELECT * FROM sales WHERE id = ?");
-    $select_sale->bind_param("i", $sale_id);
-    $select_sale->execute();
-    $sale_result = $select_sale->get_result();
+if (isset($data['update_sale_id']) && isset($data['products']) && is_array($data['products'])) {
+    $sale_id = $data['update_sale_id'];
+    $customer_name = $data['customer_name'];
+    $customer_phone = $data['customer_phone'];
+    $payment = $data['payment'];
+    $paid = $data['paid'];
+    $discount = $data['discount'];
+    $total = $data['total'];    
+    $comments = $data['comments'];
+    $products = $data['products'];
 
-    if ($sale_result->num_rows > 0) {
-        foreach ($sale_result as $sale_item) {
-            $return_qty = $sale_item['quantity'];
-            $return_product = $sale_item['products'];
+    // Update sales table
+    $stmt = $conn->prepare("UPDATE sales SET customer_name=?, customer_phone=?, payment_method=?, discount=?, paid=?, grand_total=?, comments=? WHERE id=?");
+    $stmt->bind_param("ssssddsi", $customer_name, $customer_phone, $payment, $discount, $paid, $total, $comments, $sale_id);
+    $stmt->execute();
+    $stmt->close();
 
-            //Check if quantity entered is greater than quantity available
-            $sel = $conn->prepare("SELECT * FROM product WHERE product_name = ?");
-            $sel->bind_param("s", $return_product);
-            $sel->execute();
-            $sel_result = $sel->get_result();
-
-            foreach ($sel_result as $prod_item) {
-                $qty_update = $prod_item['product_qty'] + $return_qty;
-                $entered_qty = $quantity;
-
-                if ($return_product == $product) {
-                    //START THE UPDATING PROCESS
-                    if ($entered_qty > $qty_update) {
-                        $response['status'] = 'This product has only "' . $qty_update . '" quantities left';
-                        $response['status_code'] = 'error';
-                    } else {
-                        //Insert Product and update product quantity in database
-                        $qty_left = $qty_update - $entered_qty;
-                        $stmt_insert = $conn->prepare("UPDATE sales SET customer_name=?, customer_phone=?, products=?, purchase_price=?, quantity=?, discount=?, total_price=?, payment_method=? WHERE id = ?");
-                        $stmt_insert->bind_param("sisiiiisi", $customer_name, $customer_phone, $product, $purchase_price, $quantity, $discount, $price, $payment, $sale_id);
-                        $stmt_update = $conn->prepare("UPDATE product SET product_qty=? WHERE product_name = ?");
-                        $stmt_update->bind_param("is", $qty_left, $product);
-
-                        if ($stmt_insert->execute()) {
-                            if ($stmt_update->execute() == false) {
-                                $response['status'] = 'Failed to Update product quantity';
-                                $response['status_code'] = 'error';
-                            } else {
-                                $response['status'] = 'Sale updated successfully.';
-                                $response['status_code'] = 'success';
-                            }
-                        } else {
-                            $response['status'] = 'Failed to update Sale';
-                            $response['status_code'] = 'error';
-                        }
-                    }
-                } else {
-                    $select = $conn->prepare("SELECT product_qty FROM product WHERE product_name = ?");
-                    $select->bind_param("s", $product);
-                    $select->execute();
-                    $result = $select->get_result();
-
-                    if ($result->num_rows > 0) {
-                        foreach ($result as $row) {
-                            $available_qty = $row['product_qty'];
-                            $entered_qty = $quantity;
-                            $final_return_qty = $return_qty + $prod_item['product_qty'];
-                            if ($entered_qty > $available_qty) {
-                                $response['status'] = 'This product has only "' . $available_qty . '" quantities left';
-                                $response['status_code'] = 'error';
-                            } else {
-                                //Update Sale and update product quantity in database
-                                $qty_left = $available_qty - $entered_qty;
-                                $stmt_return = $conn->prepare("UPDATE product SET product_qty=? WHERE product_name = ?");
-                                $stmt_return->bind_param("is", $final_return_qty, $return_product);
-                                $stmt_insert = $conn->prepare("UPDATE sales SET customer_name=?, customer_phone=?, products=?, purchase_price=?, quantity=?, discount=?, total_price=?, payment_method=? WHERE id = ?");
-                                $stmt_insert->bind_param("sisiiisi", $customer_name, $customer_phone, $product, $purchase_price, $quantity, $discount, $price, $payment, $sale_id);
-                                $stmt_update = $conn->prepare("UPDATE product SET product_qty=? WHERE product_name = ?");
-                                $stmt_update->bind_param("is", $qty_left, $product);
-
-                                if ($stmt_return->execute()){
-                                    if ($stmt_insert->execute()) {
-                                        if ($stmt_update->execute() == false) {
-                                            $response['status'] = 'Failed to Update product quantity';
-                                            $response['status_code'] = 'error';
-                                        } else {
-                                            $response['status'] = 'Sale updated successfully.';
-                                            $response['status_code'] = 'success';
-                                        }
-                                    } else {
-                                        $response['status'] = 'Failed to update Sale';
-                                        $response['status_code'] = 'error';
-                                    }
-                                } else {
-                                    $response['status'] = 'Failed to return product to database';
-                                    $response['status_code'] = 'error';
-                                }
-                                
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    } else {
-        $response['status'] = 'Could not fetch sale from database';
-        $response['status_code'] = 'error';
+    // 1. Restore product quantities for old sale items
+    $old_items = [];
+    $res = $conn->query("SELECT product_id, quantity FROM sale_items WHERE sale_id = $sale_id");
+    while ($row = $res->fetch_assoc()) {
+        $old_items[$row['product_id']] = $row['quantity'];
     }
-    //Send JSON response
+    foreach ($old_items as $pid => $qty) {
+        // Add back the old quantity (use decimal binding)
+        $update = $conn->prepare("UPDATE product SET product_qty = product_qty + ? WHERE id = ?");
+        $update->bind_param("di", $qty, $pid);
+        $update->execute();
+        $update->close();
+    }
+
+    // Delete old sale_items
+    $conn->query("DELETE FROM sale_items WHERE sale_id = $sale_id");
+
+
+    // Insert new sale_items
+    foreach($products as $item) {
+        $stmt_item = $conn->prepare("INSERT INTO sale_items (sale_id, product_id, price, quantity, total) VALUES (?, ?, ?, ?, ?)");
+        $stmt_item->bind_param("iiddi", $sale_id, $item['product_id'], $item['price'], $item['quantity'], $item['total']);
+        $stmt_item->execute();
+        $stmt_item->close();
+
+        // Update product quantity (implement logic to handle stock correctly)
+        
+        // Subtract the new quantity (use decimal binding)
+        $update = $conn->prepare("UPDATE product SET product_qty = product_qty - ? WHERE id = ?");
+        $update->bind_param("di", $item['quantity'], $item['product_id']);
+        $update->execute();
+        $update->close();
+        // ...
+    }
+
+    $response['status'] = 'Sale updated successfully.';
+    $response['status_code'] = 'success';
     echo json_encode($response);
 } else {
     $response['status'] = 'Bad request';
     $response['status_code'] = 'error';
-    //Send JSON response
     echo json_encode($response);
 }
+?>

@@ -1,0 +1,6 @@
+Steps to install
+1. Open Initialize.php and change base_url
+2. Open index.php and change $URL[2] to $URL[1]
+3. open db_conn.php and change the parameters for the database(username, password, database name, etc.).
+4. Import database. Open database file and change all occurences of utf8mb4_general_ci to utf8mb4_general_ci.
+5. Check .htaccess file.

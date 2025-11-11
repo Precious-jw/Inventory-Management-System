@@ -2,7 +2,7 @@
 include("config/db_conn.php");
 
 if ($_SESSION['role'] != 2){
-    redirect("http://localhost/bootstrap/");
+    redirect(base_url);
 }
 ?>
 

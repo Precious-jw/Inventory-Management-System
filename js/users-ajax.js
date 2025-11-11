@@ -20,7 +20,7 @@ $(document).ready(function(){
             $.ajax({
                 type: "POST",
                 url: "php/users/add.php",
-                data: $(this).serialize() + "$action=addUser",
+                data: $(this).serialize() + "&action=addUser",
                 success: function (response){
                     var jsonResponse = JSON.parse(response);
 
@@ -66,7 +66,8 @@ $(document).ready(function(){
         var edit_role = $("#edit_role").val();
 
         if (edit_name == "" || edit_email == "" || edit_phone == "" || edit_username == "" || edit_password == "" || edit_role == "") {
-
+            errorMessage("All fields are required");
+            $("#loader-container").hide(); //Hide the loader if there's an error
         } else {
             //Send the date to the PHP Script using AJAX
             $.ajax({

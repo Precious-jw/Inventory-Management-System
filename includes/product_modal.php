@@ -15,15 +15,15 @@
               </div>
               <div class="col-md-3">
                 <label for="purchase_price" class="form-label text-black">Purchase Price</label>
-                <input type="number" class="form-control text-gray-900" name="purchase_price" id="purchase_price">
+                <input type="number" class="form-control text-gray-900" name="purchase_price" id="purchase_price"  step="any">
               </div>
               <div class="col-md-3">
                 <label for="sale_price" class="form-label text-black">Wholesale Price</label>
-                <input type="number" class="form-control text-gray-900" name="sale_price" id="sale_price">
+                <input type="number" class="form-control text-gray-900" name="sale_price" id="sale_price"  step="any">
               </div>
               <div class="col-md-3">
                 <label for="retail_price" class="form-label text-black">Retail Price</label>
-                <input type="number" class="form-control text-gray-900" name="retail_price" id="retail_price">
+                <input type="number" class="form-control text-gray-900" name="retail_price" id="retail_price"  step="any">
               </div>
             </div>
 
@@ -34,11 +34,11 @@
               </div>
               <div class="col-md-3">
                 <label for="quantity" class="form-label text-black">Quantity</label>
-                <input type="number" class="form-control text-gray-900" name="quantity" id="quantity">
+                <input type="number" class="form-control text-gray-900" name="quantity" id="quantity" step="any">
               </div>
               <div class="col-md-3">
                 <label for="threshold" class="form-label text-black">Low Stock Limit</label>
-                <input type="number" class="form-control text-gray-900" name="threshold" id="threshold">
+                <input type="number" class="form-control text-gray-900" name="threshold" id="threshold" step="any">
               </div>
               <div class="col-md-3">
                 <label for="company_name" class="form-label text-black">Company Name</label>
@@ -75,15 +75,15 @@
                         </div>
                         <div class="col-md-3 mb-3">
                             <label class="form-label text-gray-900">Purchase Price</label>
-                            <input type="number" class="form-control text-gray-900" name="update_purchase_price" id="edit_purchase_price">
+                            <input type="number" class="form-control text-gray-900" name="update_purchase_price" id="edit_purchase_price" step="any">
                         </div>
                         <div class="col-md-3 mb-3">
                             <label class="form-label text-gray-900">Wholesale Price</label>
-                            <input type="number" class="form-control text-gray-900" name="update_sale_price" id="edit_sale_price">
+                            <input type="number" class="form-control text-gray-900" name="update_sale_price" id="edit_sale_price" step="any">
                         </div>
                         <div class="col-md-3 mb-3">
                             <label class="form-label text-gray-900">Retail Price</label>
-                            <input type="number" class="form-control text-gray-900" name="update_retail_price" id="edit_retail_price">
+                            <input type="number" class="form-control text-gray-900" name="update_retail_price" id="edit_retail_price" step="any">
                         </div>
                     </div>
                     <div class="row mt-2">
@@ -93,11 +93,11 @@
                         </div>
                         <div class="col-md-3 mb-3">
                             <label class="form-label text-gray-900">Product Quantity</label>
-                            <input type="number" class="form-control text-gray-900" name="update_qty" id="edit_qty">
+                            <input type="number" class="form-control text-gray-900" name="update_qty" id="edit_qty" step="any">
                         </div>
                         <div class="col-md-3 mb-3">
                             <label class="form-label text-gray-900">Low Stock Limit</label>
-                            <input type="number" class="form-control text-gray-900" name="update_threshold" id="edit_threshold">
+                            <input type="number" class="form-control text-gray-900" name="update_threshold" id="edit_threshold" step="any">
                         </div>
                         <div class="col-md-3 mb-3">
                             <label class="form-label text-gray-900">Company Name</label>

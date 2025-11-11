@@ -3,11 +3,24 @@
     <div class="loader"></div>
 </div>  
 
+<style>
+    .main-content-wrapper{
+        margin-left: 14rem;
+        
+    }
+
+    @media (max-width: 768px) {
+        .main-content-wrapper{
+            margin-left: 6.5rem;
+        }
+    }
+</style>
+
 <!-- Content Wrapper -->
 <div id="content-wrapper" class="d-flex flex-column">
 
     <!-- Main Content -->
-    <div id="content">
+    <div id="content" class="main-content-wrapper">
 
         <!-- Topbar -->
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
@@ -62,44 +75,44 @@
 
         <script type="text/javascript">
 
-        $(document).ready(function () {
-            $("#logout").submit(function (event){
-                event.preventDefault();
-                //Send the data to the PHP Script using AJAX
-                $.ajax({
-                    type: "POST",
-                    url: "php/users/logout.php",
-                    data: $(this).serialize(),
-                    success: function (response) {
-                        var jsonResponse = JSON.parse(response);
+            $(document).ready(function () {
+                $("#logout").submit(function (event){
+                    event.preventDefault();
+                    //Send the data to the PHP Script using AJAX
+                    $.ajax({
+                        type: "POST",
+                        url: "php/users/logout.php",
+                        data: $(this).serialize(),
+                        success: function (response) {
+                            var jsonResponse = JSON.parse(response);
 
-                        //Display the message
-                        successMessage(
-                            jsonResponse.status_code === "error" ? "error" : "success",
-                            jsonResponse.status
-                        );
+                            //Display the message
+                            successMessage(
+                                jsonResponse.status_code === "error" ? "error" : "success",
+                                jsonResponse.status
+                            );
 
-                        if (jsonResponse.status_code === "success") {
-                            $("#loader-container").show(); //Show the loader
+                            if (jsonResponse.status_code === "success") {
+                                $("#loader-container").show(); //Show the loader
 
-                            //Reload the current page
-                            setTimeout(function(){
-                                location.reload();
-                            }, 1500);
-                        } else if (jsonResponse.status_code === "error") {
+                                //Reload the current page
+                                setTimeout(function(){
+                                    location.reload();
+                                }, 1500);
+                            } else if (jsonResponse.status_code === "error") {
+                                $("#loader-container").hide(); //Hide the loader if there's an error
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            var errorMessage = "An error occurred while trying to logout.";
+                            if (xhr.responseText) {
+                                errorMessage = JSON.parse(xhr.responseText).status;
+                            }
+                            errorMessage(errorMessage);
                             $("#loader-container").hide(); //Hide the loader if there's an error
                         }
-                    },
-                    error: function (xhr, status, error) {
-                        var errorMessage = "An error occurred while trying to logout.";
-                        if (xhr.responseText) {
-                            errorMessage = JSON.parse(xhr.responseText).status;
-                        }
-                        errorMessage(errorMessage);
-                        $("#loader-container").hide(); //Hide the loader if there's an error
-                    }
-                })
-            });
-        })
+                    })
+                });
+            })
 
-    </script>
+        </script>

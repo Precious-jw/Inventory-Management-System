@@ -23,8 +23,8 @@
                             </thead>
                             <tbody id="rowContainer">
                                 <tr>
-                                    <td><input type="text" class="form-control text-gray-900" name="description[]" id="description" placeholder="Enter Expense Description"></td>
-                                    <td><input type="number" class="form-control text-gray-900" name="amount[]" id="amount" placeholder="Enter Expense Amount"></td>
+                                    <td><input type="text" class="form-control text-gray-900" name="description" id="description" placeholder="Enter Expense Description"></td>
+                                    <td><input type="number" class="form-control text-gray-900" name="amount" id="amount" placeholder="Enter Expense Amount" step="any"></td>
                                     <td><button type="button" class="btn btn-danger btn-sm removeRow">Remove</button></td>
                                 </tr>
                             </tbody>
@@ -33,7 +33,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" name="submit[]" class="btn btn-primary">Save</button>
+                    <button type="submit" name="submit" class="btn btn-primary">Save</button>
                 </div>
             </form>
         </div>
@@ -58,7 +58,7 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label text-gray-900">Amount</label>
-                            <input type="number" class="form-control text-gray-900" name="update_amount" id="edit_amount">
+                            <input type="number" class="form-control text-gray-900" name="update_amount" id="edit_amount" step="any">
                         </div>
                     </div>
                 </div>
@@ -103,11 +103,11 @@
             const newRow = document.createElement("tr");
 
             const expenseCell = document.createElement("td");
-            expenseCell.innerHTML = '<input type="text" class="form-control text-gray-900" name="description[]" id="description" placeholder="Enter Expense Description">';
+            expenseCell.innerHTML = '<input type="text" class="form-control text-gray-900" name="description" id="description" placeholder="Enter Expense Description">';
             newRow.appendChild(expenseCell);
 
             const amountCell = document.createElement("td");
-            amountCell.innerHTML = '<input type="number" class="form-control text-gray-900" name="amount[]" id="amount" placeholder="Enter Expense Amount">';
+            amountCell.innerHTML = '<input type="number" class="form-control text-gray-900" name="amount" id="amount" placeholder="Enter Expense Amount" step="any">';
             newRow.appendChild(amountCell);
 
             const actionCell = document.createElement("td");

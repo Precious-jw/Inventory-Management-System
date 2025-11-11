@@ -16,7 +16,7 @@ $(document).ready(function(){
             $.ajax({
                 type: "POST",
                 url: "php/expenses/add.php",
-                data: $(this).serialize() + "$action=saveExpenses",
+                data: $(this).serialize() + "&action=saveExpenses",
                 success: function (response){
                     var jsonResponse = JSON.parse(response);
 
@@ -40,7 +40,7 @@ $(document).ready(function(){
                     }
                 }, 
                 error: function(xhr, status, error){
-                    var errorMessage = "An error occurred while saving the product.";
+                    var errorMessage = "An error occurred while saving the Expense.";
                     if(xhr.responseText){
                         errorMessage = JSON.parse(xhr.responseText).status;
                     }
@@ -68,7 +68,7 @@ $(document).ready(function(){
             $.ajax({
                 type: "POST",
                 url: "php/expenses/update.php",
-                data: $(this).serialize() + "$action=updateExpenses",
+                data: $(this).serialize() + "&action=updateExpenses",
                 success: function (response){
                     var jsonResponse = JSON.parse(response);
 

@@ -19,7 +19,6 @@
 
 
 <!-- Bootstrap core JavaScript-->
-<script src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <!-- Core plugin JavaScript-->
@@ -30,7 +29,9 @@
 
 
 <!-- Ajax-->
+ <script src="js/salary-ajax.js"></script>
 <script src="js/expenses-ajax.js"></script>
+<script src="js/purchases-ajax.js"></script>
 <script src="js/product-ajax.js"></script>
 <script src="js/sales-ajax.js"></script>
 <script src="js/users-ajax.js"></script>
@@ -53,12 +54,17 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- Selectize JS -->
-<script
+<!-- <script
   src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js"
   integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ=="
   crossorigin="anonymous"
   referrerpolicy="no-referrer"
-></script>
+></script> -->
+
+<!-- JsPDF and html2canvas -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
 
 <script>
     //Function to display a success message

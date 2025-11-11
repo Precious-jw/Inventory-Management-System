@@ -1,10 +1,12 @@
 <?php
 include("config/db_conn.php");
 
-if ($_SESSION['role'] == 0){
-    redirect("http://localhost/ims/");
-}
+    if ($_SESSION['role'] != 2 && $_SESSION['role'] != 1) {
+        redirect(base_url);
+    }
 ?>
+
+
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
@@ -165,13 +167,13 @@ if ($_SESSION['role'] == 0){
                                     <td><?= $num; ?></td>
                                     <td><?= $row['product_name']; ?></td>
                                     <td><?= $row['product_code']; ?></td>
-                                    <td>&#8358;<?= number_format($row['purchase_price']); ?></td>
-                                    <td>&#8358;<?= number_format($row['sale_price']); ?></td>
-                                    <td>&#8358;<?= number_format($row['retail_price']); ?></td>
+                                    <td>&#8358;<?= number_format($row['purchase_price'], 2); ?></td>
+                                    <td>&#8358;<?= number_format($row['sale_price'], 2); ?></td>
+                                    <td>&#8358;<?= number_format($row['retail_price'], 2); ?></td>
                                     <td><?= $row['company']; ?></td>
                                     <td><?= $row['product_qty']; ?></td>
                                     <td><?= $row['threshold']; ?></td>
-                                    <td>&#8358;<?= number_format($row['product_qty']*$row['purchase_price']); ?></td>
+                                    <td>&#8358;<?= number_format($row['product_qty']*$row['purchase_price'], 2); ?></td>
                                     <td><span class="badge bg-<?= $statusColor[$availability]; ?> fs-6 px-3 py-2"><?= $availability; ?></span></td>
                                     <td>
                                         <button class="btn btn-primary btn-sm" onclick="updateProduct(<?= $row['product_id']; ?>)">Update</button>
@@ -208,6 +210,13 @@ include('includes/product_modal.php');
             $('#add_product_modal').modal('show');
         });
     });*/
+
+    // Add this to your script section
+    $(document).ready(function() {
+        $('#dataTable').DataTable({
+            stateSave: true
+        });
+    });
 
     // Get product to update
     function updateProduct(product_id) {

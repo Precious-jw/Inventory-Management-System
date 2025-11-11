@@ -10,7 +10,7 @@ if (isset($_POST['update_expenses_id'])) {
 
     //Update the database
     $stmt_update = $conn->prepare("UPDATE expenses SET entered_by=?, descr=?, amount=? WHERE id = ?");
-    $stmt_update->bind_param("ssii", $entered_by, $description, $amount, $expenses_id);
+    $stmt_update->bind_param("ssdi", $entered_by, $description, $amount, $expenses_id);
 
     if ($stmt_update->execute()) {
         $response['status'] = 'Expense updated successfully.';

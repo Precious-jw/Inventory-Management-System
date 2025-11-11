@@ -1,8 +1,8 @@
 <?php
 include("config/db_conn.php");
 
-if ($_SESSION['role'] == 0){
-    redirect("http://localhost/ims/");
+if ($_SESSION['role'] != 2){
+    redirect(base_url);
 }
 ?>
 <!-- Begin Page Content -->
@@ -51,6 +51,7 @@ if ($_SESSION['role'] == 0){
                 </div>
                 <div class="col-auto">
                     <button class="btn btn-primary btn-sm add-btn" data-bs-toggle="modal" data-bs-target="#add_expense_modal">Add New</button>
+                    <a href="php/expenses/print_expenses.php?dateFrom=<?= isset($_POST['dateFrom']) ? $_REQUEST['dateFrom'] : '' ?>&dateTo=<?= isset($_POST['dateTo']) ? $_REQUEST['dateTo'] : '' ?>" target="_blank" class="btn btn-secondary btn-sm add-btn">Print PDF</a>
                 </div>
             </div>
         </div>
@@ -115,10 +116,11 @@ if ($_SESSION['role'] == 0){
                                     <td><?= $num++; ?></td>
                                     <td><?= $row['entered_by']; ?></td>
                                     <td><?= $row['descr']; ?></td>
-                                    <td>&#8358;<?= number_format($row['amount']); ?></td>
+                                    <td>&#8358;<?= number_format($row['amount'], 2); ?></td>
                                     <td><?= date('d-M-Y, D H:i A', strtotime($row['date'])); ?></td>
                                     <td>
                                         <button class="btn btn-primary btn-sm" onclick="updateExpenses(<?= $row['expenses_id']; ?>)">Update</button>
+                                        <a href="php/expenses/print_expenses.php?id=<?= $row['expenses_id']; ?>" target="_blank" class="btn btn-secondary btn-sm m-1">Print PDF</a> <br>
                                         <button class="btn btn-danger btn-sm" onclick="deleteExpenses(<?= $row['expenses_id']; ?>)">Delete</button>
                                     </td>
                                 </tr>

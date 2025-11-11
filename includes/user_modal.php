@@ -84,7 +84,7 @@
                             <input type="text" class="form-control text-gray-900" name="update_username" id="edit_username">
                         </div>
                         <div class="col-md-4 mb-3">
-                            <label class="form-label text-gray-900">password</label>
+                            <label class="form-label text-gray-900">Password</label>
                             <input type="text" class="form-control text-gray-900" name="update_password" id="edit_password">
                         </div>
                         <div class="col-md-4 mb-3">

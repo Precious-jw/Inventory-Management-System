@@ -17,7 +17,7 @@ if (!isset($_SESSION['username'])){
     <div class="row">
 
         <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-4 col-md-6 mb-4">
+        <div class="col-xl-3 col-md-6 mb-4">
             <a class="text-decoration-none" href="<?= base_url."sales" ?>">
                 <div class="card border-left-primary shadow h-100 py-2">
                     <div class="card-body">
@@ -26,7 +26,7 @@ if (!isset($_SESSION['username'])){
                                 <div class="text-s font-weight-bold text-primary text-uppercase mb-1">
                                     Total Amount of Products Sold</div>
                                 <?php
-                                $sql = "SELECT SUM(total_price) AS total_amount from sales";
+                                $sql = "SELECT SUM(paid) AS total_amount from sales";
                                 $stmt = $conn->prepare($sql);
                                 $stmt->execute();
                                 $result = $stmt->get_result()->fetch_object()->total_amount;
@@ -46,8 +46,72 @@ if (!isset($_SESSION['username'])){
         </div>
 
         <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-4 col-md-6 mb-4">
-            <div class="card border-left-success shadow h-100 py-2">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <a class="text-decoration-none" href="<?= base_url."sales" ?>">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-s font-weight-bold text-primary text-uppercase mb-1">
+                                    Total Amount of Money Being Owed</div>
+                                <?php
+                                $total_owed = 0;
+                                $sql = "SELECT * from sales";
+                                $stmt = $conn->prepare($sql);
+                                $stmt->execute();
+                                $result = $stmt->get_result();
+                                if ($result->num_rows > 0) {
+                                    foreach ($result as $row) {
+                                        $owed = $row['grand_total'];
+                                        $total_owed += $owed;
+                                    }
+                                }
+                                ?>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">&#8358;<?= number_format($total_owed); ?></div>
+                                <?php
+                                $stmt->close();
+                                ?>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-s font-weight-bold text-success text-uppercase mb-1">
+                                Total Expenses Amount</div>
+                            <?php
+                            $sql = "SELECT SUM(amount) AS total_amount from expenses";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->execute();
+                            $result = $stmt->get_result()->fetch_object()->total_amount;
+                            ?>
+
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">&#8358;<?= number_format($result); ?></div>
+                            <?php
+                            $stmt->close();
+                            ?>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-shopping-cart fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
@@ -73,7 +137,7 @@ if (!isset($_SESSION['username'])){
                             ?>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                            <i class="fas fa-file-invoice-dollar fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
@@ -81,9 +145,9 @@ if (!isset($_SESSION['username'])){
         </div>
 
         <!-- Pending Requests Card Example -->
-        <div class="col-xl-4 col-md-6 mb-4">
+        <div class="col-xl-3 col-md-6 mb-4">
             <a class="text-decoration-none" href="<?= base_url."product_master" ?>">
-                <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card border-left-secondary shadow h-100 py-2">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
@@ -107,7 +171,7 @@ if (!isset($_SESSION['username'])){
         </div>
 
         <!-- Pending Requests Card Example -->
-        <div class="col-xl-4 col-md-6 mb-4">
+        <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-danger shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
@@ -133,8 +197,8 @@ if (!isset($_SESSION['username'])){
         </div>
 
         <!-- Pending Requests Card Example -->
-        <div class="col-xl-4 col-md-6 mb-4">
-            <div class="card border-left-secondary shadow h-100 py-2">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
@@ -159,7 +223,7 @@ if (!isset($_SESSION['username'])){
         </div>
 
         <!-- Pending Requests Card Example -->
-        <div class="col-xl-4 col-md-6 mb-4">
+        <div class="col-xl-3 col-md-6 mb-4">
             <a class="text-decoration-none" href="<?= base_url."users" ?>">
                 <div class="card border-left-info shadow h-100 py-2">
                     <div class="card-body">
@@ -233,15 +297,23 @@ if (!isset($_SESSION['username'])){
                                     <th>Date</th>
                                     <th>Customer Name</th>
                                     <th>Customer phone no.</th>
-                                    <th>List of Products</th>
-                                    <th>Qty</th>
-                                    <th>Total Price</th>
+                                    <th>Products Purchased</th>
                                     <th>Payment method</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                $sql = "SELECT *, sales.id AS sales_id from sales ORDER BY sales_id DESC LIMIT 10";
+                                $sql = "SELECT sales.*, sales.id as sales_id, 
+                                    GROUP_CONCAT(
+                                        CONCAT(
+                                            '<b style=\"color:#007bff\">', p.product_name, '</b> (Qty: ', si.quantity, ', Price: ₦', si.price, ')<br>'
+                                        ) SEPARATOR '||'
+                                    ) AS products_list
+                                    FROM sales
+                                    LEFT JOIN sale_items si ON sales.id = si.sale_id
+                                    LEFT JOIN product p ON si.product_id = p.id
+                                    GROUP BY sales.id ORDER BY sales.sale_date DESC LIMIT 10";
                                 $stmt = $conn->prepare($sql);
                                 $stmt->execute();
                                 $result = $stmt->get_result();
@@ -253,12 +325,17 @@ if (!isset($_SESSION['username'])){
                                 ?>
                                         <tr>
                                             <td><?= $num; ?></td>
-                                            <td><?= date('d-M-Y, D H:i A', strtotime($row['date'])); ?></td>
+                                            <td><?= date('d-M-Y, D H:i A', strtotime($row['sale_date'])); ?></td>
                                             <td><?= $row['customer_name']; ?></td>
                                             <td><?= $row['customer_phone']; ?></td>
-                                            <td><?= $row['products']; ?></td>
-                                            <td><?= $row['quantity']; ?></td>
-                                            <td>&#8358;<?= number_format($row['total_price']); ?></td>
+                                            <td><?php
+                                                    $products = explode('||', $row['products_list']);
+                                                    foreach ($products as $i => $prod) {
+                                                        echo ($i + 1) . '. ' . $prod . '<br>';
+                                                    }
+                                                ?>
+                                            </td>
+                                            <td>&#8358;<?= number_format($row['grand_total']); ?></td>
                                             <td><?= $row['payment_method']; ?></td>
                                         </tr>
                                 <?php

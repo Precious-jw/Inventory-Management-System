@@ -15,7 +15,7 @@ if (isset($_POST['update_product_id'])) {
 
     //Update the database
     $stmt_update = $conn->prepare("UPDATE product SET product_name=?, product_code=?, purchase_price=?, sale_price=?, retail_price=?, product_qty=?, threshold=?, company=? WHERE id = ?");
-    $stmt_update->bind_param("ssiiiiisi", $product_name, $product_code, $purchase_price, $sale_price, $retail_price, $qty, $threshold, $company, $product_id);
+    $stmt_update->bind_param("ssdddddsi", $product_name, $product_code, $purchase_price, $sale_price, $retail_price, $qty, $threshold, $company, $product_id);
 
     if ($stmt_update->execute()) {
         $response['status'] = 'Product updated successfully.';
